@@ -193,9 +193,35 @@ export default function LogIn() {
 
                         <span className="text-2xl font-bold text-slate-900"> AutoJob </span>
                     </div>
+
+                    <div className="flex-col mb-8 gap-3">
+
+                        <div>
+                            <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+                                Welcome back
+                            </h2>
+
+                        </div>
+
+                        <div className="flex gap-2">
+
+                            <p className="text-xl font-medium tracking-tight text-slate-500">
+                                Sign in to continue your 
+                            </p>
+
+                            <span className="text-xl font-bold tracking-tight block
+                            bg-linear-to-r from-blue-400 to-violet-400
+                            bg-clip-text text-transparent"> AI-Powered job search</span>
+                        </div>
+
+                    </div>
+
+                    <LogInForm/>
+
+                    
                     
                 </div>
-                <LogInForm/>
+                
                 
             </div>
         </div>
