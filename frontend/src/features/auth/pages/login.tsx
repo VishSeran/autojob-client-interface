@@ -1,7 +1,8 @@
-import { BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, FileSearch, MailCheck, Sparkles, Workflow } from "lucide-react";
+import { BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, FileSearch, MailCheck, Sparkles } from "lucide-react";
 import LogInForm from "../components/login_form";
-import AutoJobLogoDark from "../../../assets/autojob-logo.svg?react";
-import AutoJobLogoLight from "../../../assets/autojob-logo-light.svg?react";
+import AutoJobLogoLight from "../../../assets/autojob_logo_light.svg";
+import AutoJobLogoDark from "../../../assets/autojob_logo_dark.svg?react";
+
 
 export default function LogIn() {
 
@@ -23,7 +24,7 @@ export default function LogIn() {
                 <div className="realtive flex z-10 gap-3 items-center">
                     
                     <div className="rounded-xl bg-blue-600/ p-2.5">
-                        <AutoJobLogoLight className="h-12 w-12 shadow-2xl animate-float-slow"/>
+                        <img src={AutoJobLogoLight} className="h-12 w-12" alt="AutoJob logo" />
                     </div>
 
                     <span className="text-3xl font-bold shadow-2xl tracking-tight">
@@ -181,10 +182,18 @@ export default function LogIn() {
             </div>
 
             {/* login form */}
-            <div className="flex gap-6">
+            <div className="flex min-h-screen bg-white items-center justify-center px-6 py-12 
+            sm:px-10 lg:px-16">
 
-                <div className="">
-                    login form column
+                <div className="w-full max-w-md">
+
+                    {/*logo*/}
+                    <div className="flex mb-10 items-center gap-3 ">
+                        <AutoJobLogoDark className="h-12 w-12 shadow-2xl"/>
+
+                        <span className="text-2xl font-bold text-slate-900"> AutoJob </span>
+                    </div>
+                    
                 </div>
                 <LogInForm/>
                 
