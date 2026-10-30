@@ -1,4 +1,4 @@
-import { BrainCircuit, CheckCircle, CircleDot, FileSearch, MailCheck, Sparkles, Workflow } from "lucide-react";
+import { BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, FileSearch, MailCheck, Sparkles, Workflow } from "lucide-react";
 import LogInForm from "../components/login_form";
 import AutoJobLogoDark from "../../../assets/autojob-logo.svg?react";
 import AutoJobLogoLight from "../../../assets/autojob-logo-light.svg?react";
@@ -161,6 +161,21 @@ export default function LogIn() {
                         <p className="rounded-lg bg-amber-500/10 text-amber-300 px-2 py-1 text-sm">Approve</p>
 
                     </div>
+                </div>
+
+                {/* Floating detail */}
+                <div className="flex gap-3 mt-5 items-center text-sm text-slate-400">
+
+                    <BriefcaseBusiness className="h-4 w-4 text-blue-400"/>
+                    Intelligent job search and application automation
+
+                </div>
+
+                {/* Footer */}
+
+                <div className="relative z-10 text-sm text-slate-400">
+                    © {new Date().getFullYear()} AutoJob.
+                    Built for your next career move.
                 </div>
                 
             </div>
