@@ -1,4 +1,4 @@
-import { BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, FileSearch, Mail, MailCheck, Sparkles } from "lucide-react";
+import { BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, FileSearch, LockIcon, LockKeyhole, Mail, MailCheck, Sparkles } from "lucide-react";
 import LogInForm from "../components/login_form";
 import AutoJobLogoLight from "../../../assets/autojob_logo_light.svg";
 import AutoJobLogoDark from "../../../assets/autojob_logo_dark.svg?react";
@@ -224,22 +224,34 @@ export default function LogIn() {
                             <div className="flex flex-col gap-3">
                                 <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-700">Email Address</label>
 
-                                <div className="relative border border-gray-200 py-2 px-3 rounded-xl gap-2">
+                                <div className="relative">
                                     <Mail size={19} className="pointer-events-none absolute top-1/2 left-6 -translate-y-1/2
                                     text-slate-400" />
-                                    <input className="w-full border-transparent" 
-                                    name="email" type="email"/>
+
+                                    <input className="w-full h-12 rounded-xl border border-slate-200 bg-white pr-4 pl-12
+                                    text-sm text-shadow-slate-900 outline-none transform-all placeholder:text-slate-400
+                                    focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10" 
+                                    name="email" type="email" placeholder="Email"/>
 
                                 </div>
                             </div>
 
                             <div className="flex flex-col gap-3">
-                                <label>Password</label>
-                                <input className="border border-gray-200 py-2 px-3 rounded-xl" 
-                                name="password" type="password"/>
+                                <label htmlFor="password" className="mb-2 block text-sm font-medium text-slate-700">Password </label>
+
+                                <div className="relative">
+                                    <LockKeyhole size={19} className="pointer-events-none absolute top-1/2 left-6 -translate-y-1/2
+                                    text-slate-400" />
+
+                                    <input className="w-full h-12 rounded-xl border border-slate-200 bg-white pr-4 pl-12
+                                    text-sm text-shadow-slate-900 outline-none transform-all placeholder:text-slate-400
+                                    focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10" 
+                                    name="password" type="password" placeholder="Password"/>
+
+                                </div>
                             </div>
 
-                            <button className="p-3 bg-green-500 rounded-full
+                            <button type="button" className="p-3 bg-green-500 rounded-full
                             text-white font-bold text-xl">Login</button>
 
                         </form>
