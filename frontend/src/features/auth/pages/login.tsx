@@ -1,4 +1,4 @@
-import { BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, Eye, EyeOff, FileSearch, LockIcon, LockKeyhole, Mail, MailCheck, Sparkles } from "lucide-react";
+import { ArrowRight, BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, Eye, EyeOff, FileSearch, LoaderCircle, LockIcon, LockKeyhole, Mail, MailCheck, Sparkles } from "lucide-react";
 import LogInForm from "../components/login_form";
 import AutoJobLogoLight from "../../../assets/autojob_logo_light.svg";
 import AutoJobLogoDark from "../../../assets/autojob_logo_dark.svg?react";
@@ -9,6 +9,7 @@ import { useState } from "react";
 export default function LogIn() {
 
     const[showPassword, setShowPassword] = useState(false)
+    const[isLoading, setIsLoading] = useState(false)
 
     return (
 
@@ -284,8 +285,22 @@ export default function LogIn() {
                                 </div>
                             </div>
 
-                            <button type="button" className="p-3 bg-green-500 rounded-full
-                            text-white font-bold text-xl">Login</button>
+                            <button type="submit" disabled={isLoading} 
+                            className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 transition-all hover:bg-blue-700 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60">
+                                {
+                                    isLoading ? (
+                                        <>
+                                            <LoaderCircle size={18} className="animate-spin"/>
+                                            Signing in...
+                                        </>
+                                    ): (
+                                        <>
+                                            Sign in to AutoJob
+                                            <ArrowRight size={19}/>
+                                        </>
+                                    )
+                                }
+                            </button>
 
                         </form>
                     </div>
