@@ -1,5 +1,7 @@
 import { Sparkles, Workflow } from "lucide-react";
 import LogInForm from "../components/login_form";
+import AutoJobLogoDark from "../../../assets/autojob-logo.svg?react"
+import AutoJobLogoLight from "../../../assets/autojob-logo-light.svg?react"
 
 export default function LogIn() {
 
@@ -20,13 +22,11 @@ export default function LogIn() {
 
                 <div className="realtive flex z-10 gap-3 items-center">
                     
-                    <div className="rounded-xl bg-blue-600 p-2.5">
-
-                        <div className="h-7 w-7 animate-float-slow"></div>
-                        <svg ></svg>
+                    <div className="rounded-xl bg-blue-600/ p-2.5">
+                        <AutoJobLogoLight className="h-12 w-12 text-yellow-800 animate-float-slow"/>
                     </div>
 
-                    <span className="text-2xl font-bold shadow-2xl tracking-tight">
+                    <span className="text-3xl font-bold shadow-2xl tracking-tight">
                         AutoJob
                     </span>
                 </div>
@@ -36,7 +36,7 @@ export default function LogIn() {
 
                     <div className="inline-flex gap-2 mb-8 items-center rounded-full
                     border border-blue-400/20 bg-blue-500/10 px-4 py-2 text-lg text-blue-300">
-                        <Sparkles className="h-6 w-6"/>
+                        <Sparkles className="h-6 w-6 text-blue-500"/>
 
                         <span>Your career, on autopilot.</span>
                         
