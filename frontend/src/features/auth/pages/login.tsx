@@ -1,4 +1,4 @@
-import { BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, FileSearch, MailCheck, Sparkles } from "lucide-react";
+import { BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, FileSearch, Mail, MailCheck, Sparkles } from "lucide-react";
 import LogInForm from "../components/login_form";
 import AutoJobLogoLight from "../../../assets/autojob_logo_light.svg";
 import AutoJobLogoDark from "../../../assets/autojob_logo_dark.svg?react";
@@ -216,20 +216,26 @@ export default function LogIn() {
 
                     </div>
 
-                    <div className="relative mt-12 rounded-2xl border border-white/10 bg-white/5
+                    <div className="relative mt-12 rounded-2xl border border-white/10 bg-white/10
                 shadow-2xl backdrop-blur-xl p-5">
 
                         <form className="flex flex-col mt-2 gap-3 w-full z-10 ">
 
                             <div className="flex flex-col gap-3">
-                                <label>Email Address</label>
-                                <input className="border border-blue-400 py-2 px-3 rounded-xl" 
-                                name="email" type="email"/>
+                                <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-700">Email Address</label>
+
+                                <div className="relative border border-gray-200 py-2 px-3 rounded-xl gap-2">
+                                    <Mail size={19} className="pointer-events-none absolute top-1/2 left-6 -translate-y-1/2
+                                    text-slate-400" />
+                                    <input className="w-full border-transparent" 
+                                    name="email" type="email"/>
+
+                                </div>
                             </div>
 
                             <div className="flex flex-col gap-3">
                                 <label>Password</label>
-                                <input className="border border-blue-400 py-2 px-3 rounded-xl" 
+                                <input className="border border-gray-200 py-2 px-3 rounded-xl" 
                                 name="password" type="password"/>
                             </div>
 
