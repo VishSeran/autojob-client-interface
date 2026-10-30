@@ -1,14 +1,59 @@
+import { Sparkles, Workflow } from "lucide-react";
 import LogInForm from "../components/login_form";
 
 export default function LogIn() {
 
     return (
 
-        <div className="bg-gray-100">
+        <div className="min-h-screen bg-white lg:grid lg:grid-cols-[55%_45%]">
 
 
-            <div>
+            <div className="relative hidden min-h-screen overflow-hidden bg-slate-950 p-10 xl:p-16 text-white flex-col lg:flex">
+
+
+                {/*Background Effect*/}
+
+                <div className="pointer-events-none absolute -left-32 top-32 h-80 w-80 bg-blue-600/20 blur-3xl rounded-full"/>
+                <div className="pointer-events-none absolute -right-32 bottom-20 h-96 w-96 bg-violet-600/20 blur-3xl rounded-full"/>
+
+                {/*Logo*/}
+
+                <div className="realtive flex z-10 gap-3 items-center">
+                    
+                    <div className="rounded-xl bg-blue-600 p-2.5">
+
+                        <div className="h-7 w-7 animate-float-slow"></div>
+                        <svg ></svg>
+                    </div>
+
+                    <span className="text-2xl font-bold shadow-2xl tracking-tight">
+                        AutoJob
+                    </span>
+                </div>
+
+                {/*Main Content*/}
+                <div className="relative z-10  mx-auto w-full max-w-lg">
+
+                    <div className="inline-flex gap-2 mb-8 items-center rounded-full
+                    border border-blue-400/20 bg-blue-500/10 px-4 py-2 text-lg text-blue-300">
+                        <Sparkles className="h-6 w-6"/>
+
+                        <span>Your career, on autopilot.</span>
+                        
+                    </div>
+
+                </div>
+                
+            </div>
+
+            {/* login form */}
+            <div className="flex gap-6">
+
+                <div className="">
+                    login form column
+                </div>
                 <LogInForm/>
+                
             </div>
         </div>
     )
