@@ -8,7 +8,7 @@ export default function LogIn() {
 
     return (
 
-        <div className="min-h-screen bg-white lg:grid lg:grid-cols-[55%_45%]">
+        <div className="min-h-screen lg:grid lg:grid-cols-[55%_45%]">
 
 
             <div className="relative hidden min-h-screen overflow-hidden bg-slate-950 p-10 xl:p-16 text-white flex-col lg:flex">
@@ -188,16 +188,17 @@ export default function LogIn() {
                 <div className="w-full max-w-md">
 
                     {/*logo*/}
-                    <div className="flex mb-10 items-center gap-3 ">
+                    <div className="flex mb-10 items-center gap-3">
                         <AutoJobLogoDark className="h-12 w-12 shadow-2xl"/>
 
-                        <span className="text-2xl font-bold text-slate-900"> AutoJob </span>
+                        <span className="text-5xl font-bold bg-linear-to-r from-blue-400 to-violet-400
+                            bg-clip-text text-transparent"> AutoJob </span>
                     </div>
 
-                    <div className="flex-col mb-8 gap-3">
+                    <div className="flex-col mb-8 gap-3 ">
 
-                        <div>
-                            <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+                        <div className="flex">
+                            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
                                 Welcome back
                             </h2>
 
@@ -209,14 +210,34 @@ export default function LogIn() {
                                 Sign in to continue your 
                             </p>
 
-                            <span className="text-xl font-bold tracking-tight block
-                            bg-linear-to-r from-blue-400 to-violet-400
-                            bg-clip-text text-transparent"> AI-Powered job search</span>
+                            <span className="text-xl font-medium tracking-tight block
+                            text-slate-900"> AI-Powered job search</span>
                         </div>
 
                     </div>
 
-                    <LogInForm/>
+                    <div className="relative mt-12 rounded-2xl border border-white/10 bg-white/5
+                shadow-2xl backdrop-blur-xl p-5">
+
+                        <form className="flex flex-col mt-2 gap-3 w-full z-10 ">
+
+                            <div className="flex flex-col gap-3">
+                                <label>Email Address</label>
+                                <input className="border border-blue-400 py-2 px-3 rounded-xl" 
+                                name="email" type="email"/>
+                            </div>
+
+                            <div className="flex flex-col gap-3">
+                                <label>Password</label>
+                                <input className="border border-blue-400 py-2 px-3 rounded-xl" 
+                                name="password" type="password"/>
+                            </div>
+
+                            <button className="p-3 bg-green-500 rounded-full
+                            text-white font-bold text-xl">Login</button>
+
+                        </form>
+                    </div>
 
                     
                     
