@@ -1,10 +1,14 @@
-import { BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, FileSearch, LockIcon, LockKeyhole, Mail, MailCheck, Sparkles } from "lucide-react";
+import { BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, Eye, EyeOff, FileSearch, LockIcon, LockKeyhole, Mail, MailCheck, Sparkles } from "lucide-react";
 import LogInForm from "../components/login_form";
 import AutoJobLogoLight from "../../../assets/autojob_logo_light.svg";
 import AutoJobLogoDark from "../../../assets/autojob_logo_dark.svg?react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 
 export default function LogIn() {
+
+    const[showPassword, setShowPassword] = useState(false)
 
     return (
 
@@ -228,7 +232,7 @@ export default function LogIn() {
                                     <Mail size={19} className="pointer-events-none absolute top-1/2 left-6 -translate-y-1/2
                                     text-slate-400" />
 
-                                    <input className="w-full h-12 rounded-xl border border-slate-200 bg-white pr-4 pl-12
+                                    <input id="email" className="w-full h-12 rounded-xl border border-slate-200 bg-white pr-4 pl-12
                                     text-sm text-shadow-slate-900 outline-none transform-all placeholder:text-slate-400
                                     focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10" 
                                     name="email" type="email" placeholder="Email"/>
@@ -237,16 +241,45 @@ export default function LogIn() {
                             </div>
 
                             <div className="flex flex-col gap-3">
-                                <label htmlFor="password" className="mb-2 block text-sm font-medium text-slate-700">Password </label>
+
+                                <div className="flex justify-between">
+                                    <label htmlFor="password" className="mb-2 block text-sm font-medium text-slate-700">Password </label>
+                                    
+                                    <Link to= "/forgot-password"
+                                        className="text-sm font-semibold text-blue-600  hover:text-blue-700"> 
+                                        Forgot password?</Link>
+
+                                </div>
 
                                 <div className="relative">
                                     <LockKeyhole size={19} className="pointer-events-none absolute top-1/2 left-6 -translate-y-1/2
                                     text-slate-400" />
 
+                                    
+
                                     <input className="w-full h-12 rounded-xl border border-slate-200 bg-white pr-4 pl-12
                                     text-sm text-shadow-slate-900 outline-none transform-all placeholder:text-slate-400
                                     focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10" 
-                                    name="password" type="password" placeholder="Password"/>
+                                    id="password"
+                                    name="password" 
+                                    type={showPassword? "text": "password"} 
+                                    placeholder="Password"
+                                    autoComplete="current-password"/>
+
+                                    <button type="button"
+                                    aria-label= {showPassword? "Hide password": "Show password"}
+                                    aria-pressed={showPassword}
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute top-1/2 right-4 -translate-y-1/2 text-slate-400
+                                    transition hover:text-slate-700">
+                                            {
+                                                showPassword? (
+                                                    <EyeOff size={19}/>
+                                                ) : (
+                                                    <Eye size={19}/>
+                                                )
+                                            }
+                                    </button>
 
                                 </div>
                             </div>
