@@ -1,13 +1,14 @@
-import { CheckCircle, CircleDot, FileSearch, Sparkles, Workflow } from "lucide-react";
+import { BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, FileSearch, LockIcon, LockKeyhole, Mail, MailCheck, Sparkles } from "lucide-react";
 import LogInForm from "../components/login_form";
-import AutoJobLogoDark from "../../../assets/autojob-logo.svg?react";
-import AutoJobLogoLight from "../../../assets/autojob-logo-light.svg?react";
+import AutoJobLogoLight from "../../../assets/autojob_logo_light.svg";
+import AutoJobLogoDark from "../../../assets/autojob_logo_dark.svg?react";
+
 
 export default function LogIn() {
 
     return (
 
-        <div className="min-h-screen bg-white lg:grid lg:grid-cols-[55%_45%]">
+        <div className="min-h-screen lg:grid lg:grid-cols-[55%_45%]">
 
 
             <div className="relative hidden min-h-screen overflow-hidden bg-slate-950 p-10 xl:p-16 text-white flex-col lg:flex">
@@ -23,7 +24,7 @@ export default function LogIn() {
                 <div className="realtive flex z-10 gap-3 items-center">
                     
                     <div className="rounded-xl bg-blue-600/ p-2.5">
-                        <AutoJobLogoLight className="h-12 w-12 shadow-2xl animate-float-slow"/>
+                        <img src={AutoJobLogoLight} className="h-12 w-12" alt="AutoJob logo" />
                     </div>
 
                     <span className="text-3xl font-bold shadow-2xl tracking-tight">
@@ -66,7 +67,7 @@ export default function LogIn() {
 
                     <div className="mb-6 flex items-center justify-between">
                         <div className="flex gap-2 items-center">
-                            <CircleDot className="h-4 w-4 text-green-400"/>
+                            <CircleDot className="h-4 w-4 text-green-400 shadow-2xl"/>
                             <span className="text-sm font-medium">
                                 AI Workflow
                             </span>
@@ -114,7 +115,7 @@ export default function LogIn() {
                     border-white/10 bg-slate-900/90 p-4">
 
                         <div className="rounded-lg bg-blue-500/15 p-3">
-                            <FileSearch  className="h-5 w-5 text-blue-400"/>
+                            <BrainCircuit  className="h-5 w-5 text-purple-400"/>
                         </div>
 
                         <div className="flex-1">
@@ -129,20 +130,137 @@ export default function LogIn() {
 
                         </div>
 
-                        <CheckCircle className="h-5 w-5 text-green-400"/>
+                        <p className="rounded-lg bg-violet-500/15 text-violet-300 px-2 py-1 text-sm">AI</p>
 
                     </div>
+
+                    {/*connector*/}
+                    <div className="ml-9 h-6 w-px bg-linear-to-b from-blue-400 to-violet-400"/>
+
+
+                    {/*node 3*/}
+
+                    <div className="flex items-center gap-4 rounded-xl border
+                    border-white/10 bg-slate-900/90 p-4">
+
+                        <div className="rounded-lg bg-blue-500/15 p-3">
+                            <MailCheck  className="h-5 w-5 text-blue-400"/>
+                        </div>
+
+                        <div className="flex-1">
+
+                            <p className="font-semibold text-sm">
+                                Application Review
+                            </p>
+
+                            <p className="text-xs text-slate-400">
+                                Review and approve before sending
+                            </p>
+
+                        </div>
+
+                        <p className="rounded-lg bg-amber-500/10 text-amber-300 px-2 py-1 text-sm">Approve</p>
+
+                    </div>
+                </div>
+
+                {/* Floating detail */}
+                <div className="flex gap-3 mt-5 items-center text-sm text-slate-400">
+
+                    <BriefcaseBusiness className="h-4 w-4 text-blue-400"/>
+                    Intelligent job search and application automation
+
+                </div>
+
+                {/* Footer */}
+
+                <div className="relative z-10 text-sm text-slate-400">
+                    © {new Date().getFullYear()} AutoJob.
+                    Built for your next career move.
                 </div>
                 
             </div>
 
             {/* login form */}
-            <div className="flex gap-6">
+            <div className="flex min-h-screen bg-white items-center justify-center px-6 py-12 
+            sm:px-10 lg:px-16">
 
-                <div className="">
-                    login form column
+                <div className="w-full max-w-md">
+
+                    {/*logo*/}
+                    <div className="flex mb-10 items-center gap-3">
+                        <AutoJobLogoDark className="h-12 w-12 shadow-2xl"/>
+
+                        <span className="text-5xl font-bold bg-linear-to-r from-blue-400 to-violet-400
+                            bg-clip-text text-transparent"> AutoJob </span>
+                    </div>
+
+                    <div className="flex-col mb-8 gap-3 ">
+
+                        <div className="flex">
+                            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+                                Welcome back
+                            </h2>
+
+                        </div>
+
+                        <div className="flex gap-2">
+
+                            <p className="text-xl font-medium tracking-tight text-slate-500">
+                                Sign in to continue your 
+                            </p>
+
+                            <span className="text-xl font-medium tracking-tight block
+                            text-slate-900"> AI-Powered job search</span>
+                        </div>
+
+                    </div>
+
+                    <div className="relative mt-12 rounded-2xl border border-white/10 bg-white/10
+                shadow-2xl backdrop-blur-xl p-5">
+
+                        <form className="flex flex-col mt-2 gap-3 w-full z-10 ">
+
+                            <div className="flex flex-col gap-3">
+                                <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-700">Email Address</label>
+
+                                <div className="relative">
+                                    <Mail size={19} className="pointer-events-none absolute top-1/2 left-6 -translate-y-1/2
+                                    text-slate-400" />
+
+                                    <input className="w-full h-12 rounded-xl border border-slate-200 bg-white pr-4 pl-12
+                                    text-sm text-shadow-slate-900 outline-none transform-all placeholder:text-slate-400
+                                    focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10" 
+                                    name="email" type="email" placeholder="Email"/>
+
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col gap-3">
+                                <label htmlFor="password" className="mb-2 block text-sm font-medium text-slate-700">Password </label>
+
+                                <div className="relative">
+                                    <LockKeyhole size={19} className="pointer-events-none absolute top-1/2 left-6 -translate-y-1/2
+                                    text-slate-400" />
+
+                                    <input className="w-full h-12 rounded-xl border border-slate-200 bg-white pr-4 pl-12
+                                    text-sm text-shadow-slate-900 outline-none transform-all placeholder:text-slate-400
+                                    focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10" 
+                                    name="password" type="password" placeholder="Password"/>
+
+                                </div>
+                            </div>
+
+                            <button type="button" className="p-3 bg-green-500 rounded-full
+                            text-white font-bold text-xl">Login</button>
+
+                        </form>
+                    </div>
+
+                    
+                    
                 </div>
-                <LogInForm/>
+                
                 
             </div>
         </div>
