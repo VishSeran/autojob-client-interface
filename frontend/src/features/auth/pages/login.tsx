@@ -1,4 +1,4 @@
-import { CheckCircle, CircleDot, FileSearch, Sparkles, Workflow } from "lucide-react";
+import { BrainCircuit, CheckCircle, CircleDot, FileSearch, MailCheck, Sparkles, Workflow } from "lucide-react";
 import LogInForm from "../components/login_form";
 import AutoJobLogoDark from "../../../assets/autojob-logo.svg?react";
 import AutoJobLogoLight from "../../../assets/autojob-logo-light.svg?react";
@@ -66,7 +66,7 @@ export default function LogIn() {
 
                     <div className="mb-6 flex items-center justify-between">
                         <div className="flex gap-2 items-center">
-                            <CircleDot className="h-4 w-4 text-green-400"/>
+                            <CircleDot className="h-4 w-4 text-green-400 shadow-2xl"/>
                             <span className="text-sm font-medium">
                                 AI Workflow
                             </span>
@@ -114,7 +114,7 @@ export default function LogIn() {
                     border-white/10 bg-slate-900/90 p-4">
 
                         <div className="rounded-lg bg-blue-500/15 p-3">
-                            <FileSearch  className="h-5 w-5 text-blue-400"/>
+                            <BrainCircuit  className="h-5 w-5 text-purple-400"/>
                         </div>
 
                         <div className="flex-1">
@@ -129,7 +129,36 @@ export default function LogIn() {
 
                         </div>
 
-                        <CheckCircle className="h-5 w-5 text-green-400"/>
+                        <p className="rounded-lg bg-violet-500/15 text-violet-300 px-2 py-1 text-sm">AI</p>
+
+                    </div>
+
+                    {/*connector*/}
+                    <div className="ml-9 h-6 w-px bg-linear-to-b from-blue-400 to-violet-400"/>
+
+
+                    {/*node 3*/}
+
+                    <div className="flex items-center gap-4 rounded-xl border
+                    border-white/10 bg-slate-900/90 p-4">
+
+                        <div className="rounded-lg bg-blue-500/15 p-3">
+                            <MailCheck  className="h-5 w-5 text-blue-400"/>
+                        </div>
+
+                        <div className="flex-1">
+
+                            <p className="font-semibold text-sm">
+                                Application Review
+                            </p>
+
+                            <p className="text-xs text-slate-400">
+                                Review and approve before sending
+                            </p>
+
+                        </div>
+
+                        <p className="rounded-lg bg-amber-500/10 text-amber-300 px-2 py-1 text-sm">Approve</p>
 
                     </div>
                 </div>
