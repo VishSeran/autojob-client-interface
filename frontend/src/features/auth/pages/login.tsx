@@ -196,7 +196,7 @@ export default function LogIn() {
                     <div className="flex mb-10 items-center gap-4">
                         <AutoJobLogoDark className="h-12 w-12 shadow-2xl"/>
 
-                        <span className="text-5xl font-bold bg-linear-to-r from-blue-400 to-violet-400
+                        <span className="text-5xl font-bold bg-linear-to-r from-blue-500 to-violet-400
                             bg-clip-text text-transparent"> AutoJob </span>
                     </div>
 
@@ -216,7 +216,7 @@ export default function LogIn() {
                             </p>
 
                             <span className="text-xl font-medium tracking-tight block
-                            text-slate-900"> AI-Powered job search</span>
+                            bg-linear-to-r from-red-400 to-violet-400 bg-clip-text text-transparent"> AI-Powered job search</span>
                         </div>
 
                     </div>
