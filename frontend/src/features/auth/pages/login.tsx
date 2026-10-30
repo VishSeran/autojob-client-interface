@@ -1,4 +1,4 @@
-import { Sparkles, Workflow } from "lucide-react";
+import { CheckCircle, CircleDot, FileSearch, Sparkles, Workflow } from "lucide-react";
 import LogInForm from "../components/login_form";
 import AutoJobLogoDark from "../../../assets/autojob-logo.svg?react";
 import AutoJobLogoLight from "../../../assets/autojob-logo-light.svg?react";
@@ -51,12 +51,87 @@ export default function LogIn() {
                     </span>
                     </h1>
 
-                    
+                    <p className="mt-3 text-base max-w-md leading-7 text-slate-700">
+                        Discover relevant jobs, analyze opportunities,
+                        and prepare personalized applications through
+                        intelligent AI workflows.
+                    </p>
 
-                    
+                </div>
 
-                    
 
+                {/* Workflow visualization */}
+                <div className="relative mt-12 rounded-2xl border border-white/10 bg-white/5
+                shadow-2xl backdrop-blur-xl p-5">
+
+                    <div className="mb-6 flex items-center justify-between">
+                        <div className="flex gap-2 items-center">
+                            <CircleDot className="h-4 w-4 text-green-400"/>
+                            <span className="text-sm font-medium">
+                                AI Workflow
+                            </span>
+
+                        </div>
+
+                        <span className="rounded-full bg-green-500/10 px-3 py-2 text-sm text-green-400">
+                            Active 
+                        </span>
+
+                    </div>
+
+                    {/*Node 1*/}
+
+                    <div className="flex items-center gap-4 rounded-xl border
+                    border-white/10 bg-slate-900/90 p-4">
+
+                        <div className="rounded-lg bg-blue-500/15 p-3">
+                            <FileSearch  className="h-5 w-5 text-blue-400"/>
+                        </div>
+
+                        <div className="flex-1">
+
+                            <p className="font-semibold text-sm">
+                                Job Discovery
+                            </p>
+
+                            <p className="text-xs text-slate-400">
+                                Finding matching opportunities
+                            </p>
+
+                        </div>
+
+                        <CheckCircle className="h-5 w-5 text-green-400"/>
+
+                    </div>
+
+                    {/*connector*/}
+                    <div className="ml-9 h-6 w-px bg-linear-to-b from-blue-400 to-violet-400"/>
+
+
+                    {/*node 2*/}
+
+                    <div className="flex items-center gap-4 rounded-xl border
+                    border-white/10 bg-slate-900/90 p-4">
+
+                        <div className="rounded-lg bg-blue-500/15 p-3">
+                            <FileSearch  className="h-5 w-5 text-blue-400"/>
+                        </div>
+
+                        <div className="flex-1">
+
+                            <p className="font-semibold text-sm">
+                                AI Relevance Analysis
+                            </p>
+
+                            <p className="text-xs text-slate-400">
+                                Matching your skills to jobs
+                            </p>
+
+                        </div>
+
+                        <CheckCircle className="h-5 w-5 text-green-400"/>
+
+                    </div>
                 </div>
                 
             </div>
