@@ -193,7 +193,7 @@ export default function LogIn() {
                 <div className="w-full max-w-md">
 
                     {/*logo*/}
-                    <div className="flex mb-10 items-center gap-3">
+                    <div className="flex mb-10 items-center gap-4">
                         <AutoJobLogoDark className="h-12 w-12 shadow-2xl"/>
 
                         <span className="text-5xl font-bold bg-linear-to-r from-blue-400 to-violet-400
@@ -286,7 +286,7 @@ export default function LogIn() {
                             </div>
 
                             <button type="submit" disabled={isLoading} 
-                            className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 transition-all hover:bg-blue-700 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60">
+                            className="flex mt-3 h-12 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 transition-all hover:bg-blue-700 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60">
                                 {
                                     isLoading ? (
                                         <>
@@ -303,9 +303,19 @@ export default function LogIn() {
                             </button>
 
                         </form>
+
+                        <p className="mt-8 text-center text-sm text-shadow-slate-900">
+                            Don't have an account?{" "}
+
+                            <Link to="/signup" className="font-semibold text-blue-600 hover:text-blue-700">
+                                Create an account
+                            </Link>
+                        </p>
                     </div>
 
-                    
+                    <p className="mt-12 text-center text-xs text-slate-400">
+                        Your next opportunity starts here.
+                    </p>
                     
                 </div>
                 
