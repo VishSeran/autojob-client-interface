@@ -2,14 +2,32 @@ import { ArrowRight, BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, Ey
 import LogInForm from "../components/login_form";
 import AutoJobLogoLight from "../../../assets/autojob_logo_light.svg";
 import AutoJobLogoDark from "../../../assets/autojob_logo_dark.svg?react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useSubmit } from "react-router-dom";
+import { useState, type SubmitEvent } from "react";
 
 
 export default function LogIn() {
 
     const[showPassword, setShowPassword] = useState(false)
     const[isLoading, setIsLoading] = useState(false)
+    const[email, setEmail] = useState("")
+    const[password, setPassword] = useState("")
+    const[error, setError] = useState("") 
+
+
+    const handleSubmit = async (
+        event: SubmitEvent <HTMLFormElement>
+    ) => {
+
+        event.preventDefault();
+
+        try{
+
+
+        }catch (error) {
+            console.error("Login error:", error);
+        }
+    }
 
     return (
 
@@ -222,8 +240,8 @@ export default function LogIn() {
                     </div>
 
                     <div className="relative mt-12 rounded-2xl border border-white/10 bg-white/10
-                shadow-2xl backdrop-blur-xl p-5">
-
+                    shadow-2xl backdrop-blur-xl p-5">
+                        
                         <form className="flex flex-col mt-2 gap-3 w-full z-10 ">
 
                             <div className="flex flex-col gap-3">
@@ -236,7 +254,7 @@ export default function LogIn() {
                                     <input id="email" className="w-full h-12 rounded-xl border border-slate-200 bg-white pr-4 pl-12
                                     text-sm text-shadow-slate-900 outline-none transform-all placeholder:text-slate-400
                                     focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10" 
-                                    name="email" type="email" placeholder="Email"/>
+                                    name="email" type="email" placeholder="Email" value={email}/>
 
                                 </div>
                             </div>
@@ -263,6 +281,7 @@ export default function LogIn() {
                                     focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10" 
                                     id="password"
                                     name="password" 
+                                    value={password}
                                     type={showPassword? "text": "password"} 
                                     placeholder="Password"
                                     autoComplete="current-password"/>
@@ -318,9 +337,8 @@ export default function LogIn() {
                     </p>
                     
                 </div>
-                
-                
             </div>
+
         </div>
     )
 }
