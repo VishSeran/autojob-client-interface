@@ -45,6 +45,8 @@ export default function LogIn() {
             }
 
             console.log("Login successful");
+            setEmail("")
+            setPassword("")
 
         }catch (error) {
             console.error("Login error:", error);
@@ -276,7 +278,8 @@ export default function LogIn() {
                                     <input id="email" className="w-full h-12 rounded-xl border border-slate-200 bg-white pr-4 pl-12
                                     text-sm text-shadow-slate-900 outline-none transform-all placeholder:text-slate-400
                                     focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10" 
-                                    name="email" type="email" placeholder="Email" value={email}/>
+                                    name="email" type="email" placeholder="Email" value={email}
+                                    onChange={(e) => setEmail(e.target.value)}/>
 
                                 </div>
                             </div>
@@ -304,6 +307,7 @@ export default function LogIn() {
                                     id="password"
                                     name="password" 
                                     value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     type={showPassword? "text": "password"} 
                                     placeholder="Password"
                                     autoComplete="current-password"/>
