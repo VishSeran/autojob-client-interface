@@ -1,10 +1,10 @@
 import { ArrowRight, BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, Eye, EyeOff, FileSearch, LoaderCircle, LockIcon, LockKeyhole, Mail, MailCheck, Sparkles } from "lucide-react";
-import LogInForm from "../components/login_form";
 import AutoJobLogoLight from "../../../assets/autojob_logo_light.svg";
 import AutoJobLogoDark from "../../../assets/autojob_logo_dark.svg?react";
-import { Link, redirect, useSubmit } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { useState, type SubmitEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import {toast} from "sonner"
 
 export default function LogIn() {
 
@@ -47,6 +47,11 @@ export default function LogIn() {
             );
 
             if (!response.ok) {
+                toast.error("Login failed",
+                    {
+                        description:"Incorrect email or password. Please try again."
+                    }
+                )
                 throw new Error("Login failed")
             }
 

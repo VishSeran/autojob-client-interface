@@ -1,24 +1,35 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import LogIn from './features/auth/pages/login'
+import {Toaster} from "sonner"
 
 function App() {
-  const [count, setCount] = useState(0)
+  
 
   return (
-    
-    <Routes>
 
-      <Route
-        path='/login'
-        element={<LogIn/>}
+    <>
+
+      <Routes>
+
+        <Route
+          path='/login'
+          element={<LogIn/>}
+        />
+
+      </Routes>
+
+      <Toaster
+        position='top-right'
+        richColors
+        closeButton
+        duration={4000}
+
       />
+    </>
+    
 
-    </Routes>
+
   );
 }
 
