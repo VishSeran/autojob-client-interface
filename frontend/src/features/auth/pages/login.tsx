@@ -2,11 +2,13 @@ import { ArrowRight, BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, Ey
 import LogInForm from "../components/login_form";
 import AutoJobLogoLight from "../../../assets/autojob_logo_light.svg";
 import AutoJobLogoDark from "../../../assets/autojob_logo_dark.svg?react";
-import { Link, useSubmit } from "react-router-dom";
+import { Link, redirect, useSubmit } from "react-router-dom";
 import { useState, type SubmitEvent } from "react";
-
+import { useNavigate } from "react-router-dom";
 
 export default function LogIn() {
+
+    const navigate = useNavigate()
 
     const[showPassword, setShowPassword] = useState(false)
     const[isLoading, setIsLoading] = useState(false)
@@ -20,6 +22,10 @@ export default function LogIn() {
     ) => {
 
         event.preventDefault();
+        if (isLoading) return;
+
+        setError("")
+        setIsLoading(true)
 
         try{
 
@@ -47,9 +53,15 @@ export default function LogIn() {
             console.log("Login successful");
             setEmail("")
             setPassword("")
+            navigate("/dashboard",{
+                replace:true
+            })
 
         }catch (error) {
             console.error("Login error:", error);
+            setError("Unable to connect to the server.");
+        }finally{
+            setIsLoading(false)
         }
     }
 
