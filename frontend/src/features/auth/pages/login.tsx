@@ -23,6 +23,28 @@ export default function LogIn() {
 
         try{
 
+            const response = await fetch(
+                "http://127.0.0.1:8000/auth/login",
+
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(
+                            {
+                            email,
+                            password
+                        }
+                    )
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Login failed")
+            }
+
+            console.log("Login successful");
 
         }catch (error) {
             console.error("Login error:", error);
@@ -242,7 +264,7 @@ export default function LogIn() {
                     <div className="relative mt-12 rounded-2xl border border-white/10 bg-white/10
                     shadow-2xl backdrop-blur-xl p-5">
                         
-                        <form className="flex flex-col mt-2 gap-3 w-full z-10 ">
+                        <form onSubmit={handleSubmit} className="flex flex-col mt-2 gap-3 w-full z-10 ">
 
                             <div className="flex flex-col gap-3">
                                 <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-700">Email Address</label>
