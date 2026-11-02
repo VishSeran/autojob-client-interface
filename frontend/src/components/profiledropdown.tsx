@@ -51,7 +51,8 @@ export default function ProfileDropDown(){
             onClick={() => setIsOpen(!isOpen)}
             aria-expanded={isOpen}
             aria-haspopup="true"
-            className="rounded-full bg-blue-600 px-4 py-1 text-white hover:bg-blue-700">
+            className="rounded-full bg-linear-to-r from-blue-700 to-purple-700 px-4 py-1 
+            text-white hover:bg-blue-700 shadow-xl">
                 Profile
             </button>
 
