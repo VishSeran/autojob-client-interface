@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
+import api from "../features/auth/api/axiosInstance"
 
 
 export default function ProfileDropDown(){
@@ -16,17 +17,13 @@ export default function ProfileDropDown(){
 
         try{
 
-            const response = await fetch(
-                "http://127.0.0.1:8000/auth/logout",
-                {
-                    method:"POST",
-                    credentials:"include"
-                }
+            const response = await api.post<LogOutResponse>(
+                "auth/logout",
             )
     
-            const data: LogOutResponse = await response.json()
+            const data = response.data
     
-            if (!response.ok){
+            if (response.status != 200){
                 throw new Error("Logout failed")
             }
     

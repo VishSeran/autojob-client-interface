@@ -35,7 +35,7 @@ export default function Header(){
                 bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">AutoJob</span>
             </div>
 
-            <nav className="flex items-center gap-2">
+            <nav className="flex items-center gap-10">
                 {
                     links.map((link) => (
 
@@ -55,20 +55,6 @@ export default function Header(){
 
             <ProfileDropdown/>
 
-            <div>
-            {isLoading ? (
-            <p>Loading...</p>
-            ) : user ? (
-            <div>
-                <p>{user.name}</p>
-                <p className="text-sm text-slate-400">
-                {user.email}
-                </p>
-            </div>
-            ) : (
-            <p>Guest</p>
-            )}
-        </div>
         </header>
     )
 }
