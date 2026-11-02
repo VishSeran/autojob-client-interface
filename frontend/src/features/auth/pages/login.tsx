@@ -17,6 +17,11 @@ export default function LogIn() {
     const[error, setError] = useState("") 
 
 
+    type LogInResponse = {
+        message: string
+    }
+
+
     const handleSubmit = async (
         event: SubmitEvent <HTMLFormElement>
     ) => {
@@ -46,6 +51,8 @@ export default function LogIn() {
                 }
             );
 
+            const data:LogInResponse = await response.json()
+
             if (!response.ok) {
                 toast.error("Login failed",
                     {
@@ -56,6 +63,7 @@ export default function LogIn() {
             }
 
             console.log("Login successful");
+            toast.success(data.message)
             setEmail("")
             setPassword("")
             navigate("/dashboard",{
