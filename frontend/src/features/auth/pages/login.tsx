@@ -46,6 +46,8 @@ export default function LogIn() {
                 }
             );
 
+            response
+
             if (!response.ok) {
                 toast.error("Login failed",
                     {

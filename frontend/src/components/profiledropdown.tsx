@@ -1,11 +1,36 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { toast } from "sonner"
 
 
 export default function ProfileDropDown(){
 
     const[isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate()
+
+
+     const handleLogout = async() =>{
+
+        const response = await fetch(
+            "http://127.0.0.1:8000/auth/logout",
+            {
+                method:"POST",
+                credentials:"include"
+            }
+        )
+
+        const data = await response.json()
+
+        if (!response.ok){
+            throw new Error("Logout failed")
+        }
+
+        toast.success(data.message);
+        navigate("/login");
+        
+
+        
+    }
 
     return(
 
