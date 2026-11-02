@@ -19,8 +19,11 @@ const UserAvatar = ({username}:UserAvatarProp) => {
 
     return (
 
-        <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold text-sm">
+        <div className="w-10 h-10 rounded-full bg-linear-to-r from-blue-700 to-purple-700 px-4 py-1 
+            text-white hover:bg-blue-700 shadow-xl flex items-center justify-center font-semibold text-xl">
             {getInitials(username)}
         </div>
     )
 }
+
+export default UserAvatar

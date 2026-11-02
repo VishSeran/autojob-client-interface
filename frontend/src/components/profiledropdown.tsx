@@ -2,12 +2,15 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import api from "../features/auth/api/axiosInstance"
+import { useUser } from "../contexts/UserContext"
+import UserAvatar from "./UserAvatar"
 
 
 export default function ProfileDropDown(){
 
-    const[isOpen, setIsOpen] = useState(false)
-    const navigate = useNavigate()
+    const[isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
+    const {user, isLoading} = useUser();
 
     type LogOutResponse = {
         message: string
@@ -48,9 +51,16 @@ export default function ProfileDropDown(){
             onClick={() => setIsOpen(!isOpen)}
             aria-expanded={isOpen}
             aria-haspopup="true"
-            className="rounded-full bg-linear-to-r from-blue-700 to-purple-700 px-4 py-1 
-            text-white hover:bg-blue-700 shadow-xl">
-                Profile
+            className="text-xl"
+            >
+                {
+                    user? (
+                      <UserAvatar username={user.name}/>  
+                    ): (
+                        <p>Pro</p>
+                    )
+                }
+
             </button>
 
 
