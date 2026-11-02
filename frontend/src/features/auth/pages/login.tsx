@@ -5,6 +5,7 @@ import { Link} from "react-router-dom";
 import { useState, type SubmitEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import {toast} from "sonner"
+import api from "../api/axiosInstance";
 
 export default function LogIn() {
 
@@ -34,26 +35,17 @@ export default function LogIn() {
 
         try{
 
-            const response = await fetch(
-                "http://127.0.0.1:8000/auth/login",
-
+            const response = await api.post<LogInResponse>(
+                "auth/login",
                 {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(
-                            {
-                            email,
-                            password
-                        }
-                    )
+                    email,
+                    password
                 }
-            );
+            )
 
-            const data:LogInResponse = await response.json()
+            const data = response.data
 
-            if (!response.ok) {
+            if (response.status != 200) {
                 toast.error("Login failed",
                     {
                         description:"Incorrect email or password. Please try again."

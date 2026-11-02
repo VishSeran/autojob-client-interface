@@ -1,8 +1,11 @@
 import { NavLink } from "react-router-dom"
 import AutoJobLogoLight from "../assets/autojob_logo_light.svg"
 import ProfileDropdown from "./profiledropdown";
+import { useUser } from "../contexts/UserContext";
 
 export default function Header(){
+
+    const {user, isLoading} = useUser();
 
     const links = [
         {
@@ -32,7 +35,7 @@ export default function Header(){
                 bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">AutoJob</span>
             </div>
 
-            <nav className="flex items-center gap-2">
+            <nav className="flex items-center gap-10">
                 {
                     links.map((link) => (
 
@@ -51,6 +54,7 @@ export default function Header(){
             </nav>
 
             <ProfileDropdown/>
+
         </header>
     )
 }
