@@ -17,9 +17,9 @@ export default function Header(){
         },
 
         {
-            label:
+            label:"Jobs", to:"/jobs"
         }
-    ]
+    ];
 
     return (
 
@@ -31,12 +31,26 @@ export default function Header(){
                 bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">AutoJob</span>
             </div>
 
-            <div className="flex gap-2 items-center justify-between">
+            <nav className="flex items-center gap-2">
+                {
+                    links.map((link) => (
 
-                <div>
+                        <NavLink 
+                            key={link.to}
+                            to={link.to}
+                        className={({isActive})=>(
+                            isActive
+                            ? "font-medium text-blue-400"
+                            : "text-slate-300 transition hover:text-white"
+                        )}>
+                            {link.label}
+                        </NavLink>
+                    ))
+                }
+            </nav>
 
-                </div>
-
+            <div>
+                
             </div>
         </header>
     )
