@@ -8,29 +8,39 @@ export default function ProfileDropDown(){
     const[isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate()
 
+    type LogOutResponse = {
+        message: string
+    }
 
      const handleLogout = async() =>{
 
-        const response = await fetch(
-            "http://127.0.0.1:8000/auth/logout",
-            {
-                method:"POST",
-                credentials:"include"
+        try{
+
+            const response = await fetch(
+                "http://127.0.0.1:8000/auth/logout",
+                {
+                    method:"POST",
+                    credentials:"include"
+                }
+            )
+    
+            const data: LogOutResponse = await response.json()
+    
+            if (!response.ok){
+                throw new Error("Logout failed")
             }
-        )
-
-        const data = await response.json()
-
-        if (!response.ok){
-            throw new Error("Logout failed")
+    
+            toast.success(data.message);
+            navigate("/login");
+        
+        }catch(error){
+            console.error("Logout error:", error);
+            toast.error(
+                error instanceof Error? error.message: "Logout failed"
+            );
         }
-
-        toast.success(data.message);
-        navigate("/login");
         
-
-        
-    }
+    };
 
     return(
 
@@ -77,10 +87,7 @@ export default function ProfileDropDown(){
 
                         <button
                         type="button"
-                        onClick={() =>{
-                            setIsOpen(false);
-                            {handleLogout};
-                        }}
+                        onClick={handleLogout}
                         className="block w-full px-4 py-2 text-left text-sm  text-red-500
                         hover:bg-red-100"
                         >
