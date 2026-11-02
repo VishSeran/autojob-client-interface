@@ -1,8 +1,11 @@
 import { NavLink } from "react-router-dom"
 import AutoJobLogoLight from "../assets/autojob_logo_light.svg"
 import ProfileDropdown from "./profiledropdown";
+import { useUser } from "../contexts/UserContext";
 
 export default function Header(){
+
+    const {user, isLoading} = useUser();
 
     const links = [
         {
@@ -51,6 +54,21 @@ export default function Header(){
             </nav>
 
             <ProfileDropdown/>
+
+            <div>
+            {isLoading ? (
+            <p>Loading...</p>
+            ) : user ? (
+            <div>
+                <p>{user.name}</p>
+                <p className="text-sm text-slate-400">
+                {user.email}
+                </p>
+            </div>
+            ) : (
+            <p>Guest</p>
+            )}
+        </div>
         </header>
     )
 }
