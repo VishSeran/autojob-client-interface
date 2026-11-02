@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom"
 import AutoJobLogoLight from "../assets/autojob_logo_light.svg"
+import ProfileDropdown from "./profiledropdown";
 
 export default function Header(){
 
@@ -49,9 +50,7 @@ export default function Header(){
                 }
             </nav>
 
-            <div>
-                
-            </div>
+            <ProfileDropdown/>
         </header>
     )
 }
