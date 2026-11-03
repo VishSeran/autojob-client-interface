@@ -10,7 +10,7 @@ export default function ProfileDropDown(){
 
     const[isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
-    const {user, isLoading} = useUser();
+    const {user} = useUser();
 
     type LogOutResponse = {
         message: string

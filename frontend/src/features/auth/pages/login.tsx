@@ -1,4 +1,4 @@
-import { ArrowRight, BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, Eye, EyeOff, FileSearch, LoaderCircle, LockIcon, LockKeyhole, Mail, MailCheck, Sparkles } from "lucide-react";
+import { ArrowRight, BrainCircuit, BriefcaseBusiness, CheckCircle, CircleDot, Eye, EyeOff, FileSearch, LoaderCircle, LockKeyhole, Mail, MailCheck, Sparkles } from "lucide-react";
 import AutoJobLogoLight from "../../../assets/autojob_logo_light.svg";
 import AutoJobLogoDark from "../../../assets/autojob_logo_dark.svg?react";
 import { Link} from "react-router-dom";
@@ -6,11 +6,12 @@ import { useState, type SubmitEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import {toast} from "sonner"
 import api from "../api/axiosInstance";
+import { useUser } from "../../../contexts/UserContext";
 
 export default function LogIn() {
 
-    const navigate = useNavigate()
-
+    const navigate = useNavigate();
+    
     const[showPassword, setShowPassword] = useState(false)
     const[isLoading, setIsLoading] = useState(false)
     const[email, setEmail] = useState("")
