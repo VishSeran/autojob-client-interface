@@ -1,8 +1,11 @@
 import { LoaderCircle, Sparkles } from "lucide-react";
-import AutoJobLogoDark from "../assets/autojob_logo_dark.svg";
+import AutoJobLogoLight from "../assets/autojob_logo_light.svg";
 
 export default function DashboardLoading() {
+
     return (
+
+        
         <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-50">
 
             
@@ -19,8 +22,8 @@ export default function DashboardLoading() {
                     
                     <div className="absolute inset-0 rounded-2xl bg-blue-500/20 blur-xl" />
 
-                    <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-slate-200 bg-white shadow-xl">
-                        <img src={AutoJobLogoDark} alt="Autojob logo" className="h-12 w-12" />
+                    <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-slate-200 bg-slate-950 shadow-xl">
+                        <img src={AutoJobLogoLight} alt="Autojob logo" className="h-12 w-12" />
                     </div>
 
                     
