@@ -8,7 +8,7 @@ import { toast } from "sonner";
 
 export default function Resumes() {
 
-    const {resumes, isLoading} = useResumes();
+    const {resumes, isLoading, setResumes, refreshResumes} = useResumes();
 
     const[category, setCategory] = useState("view_resumes")
 
@@ -27,7 +27,7 @@ export default function Resumes() {
 
         try {
 
-            const response = await api.post(
+            const response = await api.patch(
                 `resume/${id}/default`
             )
 
@@ -41,6 +41,8 @@ export default function Resumes() {
             const data = response.data
             console.log(data.message)
             toast.success(data.message)
+
+            await refreshResumes();
 
 
         }catch (error) {
@@ -143,7 +145,7 @@ export default function Resumes() {
 
                                                             ): (
                                                                 <div className="flex items-center">
-                                                                    <button onClick={makeDefault}>
+                                                                    <button onClick={() =>makeDefault(resume.id)}>
                                                                         <TextSelect className="h-4 w-4"/>
                                                                     </button> 
                                                                     
