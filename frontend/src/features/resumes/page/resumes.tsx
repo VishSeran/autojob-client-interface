@@ -4,6 +4,7 @@ import { useResumes } from "../../../contexts/ResumeContext";
 import { ActivityIcon, BedDouble, BotOff, Bubbles, DeleteIcon, DownloadIcon, GrabIcon, RecycleIcon, SearchAlertIcon, TextSelect, TrashIcon } from "lucide-react";
 import api from "../../auth/api/axiosInstance";
 import { toast } from "sonner";
+import DashboardLoading from "../../../components/LoadingScreen";
 
 
 export default function Resumes() {
@@ -46,9 +47,16 @@ export default function Resumes() {
 
 
         }catch (error) {
-
+            console.error("Error resume make default", error)
+            toast.error("Error resume make default")
         }
 
+    }
+
+    if(!resumes) {
+        return(
+            <DashboardLoading/>
+        )
     }
 
     return (
@@ -60,26 +68,36 @@ export default function Resumes() {
 
             <div className="flex flex-col w-full items-center mt-8">
 
-                <div className="flex gap-5 text-sm border transition duration-300 border-slate-100 px-4 py-2 rounded-full shadow-lg">
+                <div className="relative gap-5 text-sm border transition duration-300 border-slate-100 px-4 py-2 rounded-full shadow-lg">
+
+                    <div
+                    className={`absolute top-2 bottom-2 w-[calc(50%-12px)] rounded-full bg-blue-900 transition-all duration-600 ease-in-out
+                        ${
+                            category === "view_resumes"
+                                ? "left-2"
+                                : "left-[calc(50%+2px)]"
+                        }
+                    `}
+                    />
 
                     <button
                     onClick={()=>setCategory("view_resumes")} 
-                    className={`px-3 py-1 rounded-full 
+                    className={`relative px-5 py-1 rounded-full z-10
                         ${
                             category == "view_resumes"
-                            ? "font-semibold text-[16px]  text-white bg-blue-900"
-                            : "font-normal text-slate-700 hover:text-blue-900"
+                            ? "font-semibold text-[17px]  text-white bg-blue-900"
+                            : "font-normal text-[15px] text-slate-700 hover:text-blue-900"
                         }`}>
                         View Resumes
                     </button>
 
                     <button
                     onClick={() => setCategory("add_resume")}
-                    className={`px-3 py-1 rounded-full 
+                    className={`relative z-10 px-5 py-1 rounded-full 
                         ${
                             category == "add_resume"
-                            ? "font-semibold text-[16px]  text-white bg-blue-900"
-                            : "font-normal text-slate-700 hover:text-blue-900"
+                            ? "font-semibold text-[17px]  text-white bg-blue-900"
+                            : "font-normal text-[15px] text-slate-700 hover:text-blue-900"
                         }`}>
                         Add Resume
                     </button>
@@ -118,7 +136,7 @@ export default function Resumes() {
 
                                                     </div>
 
-                                                    <div className="flex gap-1 justify-between px-3">
+                                                    <div className="flex gap-1 justify-between px-3 py-2">
 
                                                         <div className="flex "> 
 
@@ -137,26 +155,27 @@ export default function Resumes() {
                                                             
                                                              {resume.is_default? (
                                                                 <div className="flex items-center">
-                                                                     
-                                                                    <button onClick={() =>makeDefault(resume.id)}>
-                                                                        <TextSelect className="h-4 w-4"/>
-                                                                    </button> 
-                                                                    
+
                                                                     <button className="text-sm text-green-600 px-2 py-1 font-medium">
                                                                         Default
                                                                     </button>
                                                                 </div>
 
                                                             ): (
-                                                                <div className="flex items-center">
-                                                                    <button onClick={() =>makeDefault(resume.id)}>
-                                                                        <TextSelect className="h-4 w-4"/>
-                                                                    </button> 
-                                                                    
+                                                                <div className="flex items-center gap-2">
+
                                                                     <button 
                                                                     className="text-sm text-red-600 px-2 py-1 font-medium">
                                                                         Not Default
                                                                     </button>
+                                                                    
+                                                                    <button onClick={() =>makeDefault(resume.id)}
+                                                                        className="px-2 py-1 bg-green-600 text-white rounded-lg
+                                                                        hover:bg-blue-500 hover:text-gray-100 focus:bg-green-400 shadow-lg focus:scale-95">
+                                                                        Make Default
+                                                                    </button>  
+                                                                    
+                                                                    
                                                                 </div>
                                                             )}
                                                         </div>
