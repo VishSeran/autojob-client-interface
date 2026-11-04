@@ -136,8 +136,12 @@ export default function Resumes() {
 
                                                             
                                                              {resume.is_default? (
-                                                                <div className="flex items-center"> 
-                                                                    <TextSelect className="h-4 w-4"/>
+                                                                <div className="flex items-center">
+                                                                     
+                                                                    <button onClick={() =>makeDefault(resume.id)}>
+                                                                        <TextSelect className="h-4 w-4"/>
+                                                                    </button> 
+                                                                    
                                                                     <button className="text-sm text-green-600 px-2 py-1 font-medium">
                                                                         Default
                                                                     </button>
