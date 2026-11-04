@@ -46,7 +46,7 @@ export default function DashboardLoading() {
                 <div className="mt-5 text-center">
 
                     <h2 className="text-base font-semibold text-slate-800">
-                        Preparing your dashboard
+                        Preparing your environment
                     </h2>
 
                     <p className="mt-1 text-sm text-slate-500">

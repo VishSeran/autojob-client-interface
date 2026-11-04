@@ -4,6 +4,7 @@ import { useResumes } from "../../../contexts/ResumeContext";
 import { ActivityIcon, BedDouble, BotOff, Bubbles, DeleteIcon, DownloadIcon, GrabIcon, RecycleIcon, SearchAlertIcon, TextSelect, TrashIcon } from "lucide-react";
 import api from "../../auth/api/axiosInstance";
 import { toast } from "sonner";
+import DashboardLoading from "../../../components/LoadingScreen";
 
 
 export default function Resumes() {
@@ -46,9 +47,16 @@ export default function Resumes() {
 
 
         }catch (error) {
-
+            console.error("Error resume make default", error)
+            toast.error("Error resume make default")
         }
 
+    }
+
+    if(!resumes) {
+        return(
+            <DashboardLoading/>
+        )
     }
 
     return (
