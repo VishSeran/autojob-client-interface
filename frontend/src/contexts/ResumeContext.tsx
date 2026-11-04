@@ -7,9 +7,9 @@ import { toast } from "sonner";
 
 interface ResumeContextType {
 
-    resumes: [Resume] | null;
+    resumes: Resume[] | null;
     isLoading: boolean;
-    setResumes: (resumes: [Resume] | null) => void;
+    setResumes: (resumes: Resume[] | null) => void;
     refreshResumes: () => Promise<void>;
 }
 
@@ -24,7 +24,7 @@ interface ResumeProviderProps {
 
 export function ResumeProvider({children}: ResumeProviderProps) {
 
-    const [resumes, setResumes] = useState<[Resume] | null>(null);
+    const [resumes, setResumes] = useState< Resume[] | null>(null);
     const [isLoading, setIsLoading] = useState(true)
 
     const refreshResumes = async() => {

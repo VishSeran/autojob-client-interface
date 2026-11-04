@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "../../../components/header";
 import { useResumes } from "../../../contexts/ResumeContext";
-import { DeleteIcon, DownloadIcon, GrabIcon, RecycleIcon, TrashIcon } from "lucide-react";
+import { ActivityIcon, BedDouble, BotOff, Bubbles, DeleteIcon, DownloadIcon, GrabIcon, RecycleIcon, SearchAlertIcon, TextSelect, TrashIcon } from "lucide-react";
 
 
 export default function Resumes() {
@@ -10,7 +10,7 @@ export default function Resumes() {
 
     const[category, setCategory] = useState("view_resumes")
 
-    const formatDate = (date:Date) => {
+    const formatDate = (date:string) => {
 
         return new Date(date).toLocaleString("en-US",{
             month:"short",
@@ -72,11 +72,11 @@ export default function Resumes() {
                                             resumes?.map((resume) => (
                                                 
 
-                                                <div className="flex flex-col gap-1 m-1 border border-slate-100 bg-white rounded-lg shadow-md"> 
+                                                <div key={resume.filename} className="flex flex-col gap-1 px-3 py-1 mx-3 my-1 border border-slate-100 bg-white rounded-lg shadow-md"> 
 
                                                     <div className="flex justify-between items-center gap-5 px-3 py-1 mx-3 my-1"> 
                                                         <div>
-                                                            <h2 className="text-[18px]  font-semibold font-sans"> {resume.filename} </h2>
+                                                            <h2 className="text-[18px] my-1  font-semibold font-sans"> {resume.filename} </h2>
 
                                                         </div>
 
@@ -88,7 +88,9 @@ export default function Resumes() {
 
                                                     </div>
 
-                                                    <div className="flex gap-1 justify-start px-3">
+                                                    <div className="flex gap-1 justify-between px-3">
+
+                                                        <div className="flex "> 
 
                                                         <button className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500">
                                                             <DownloadIcon className="h-4 w-4"/>
@@ -97,6 +99,24 @@ export default function Resumes() {
                                                         <button className="text-sm text-red-700 px-2 py-1 hover:text-red-500">
                                                             <TrashIcon className="h-4 w-4"/>
                                                         </button> 
+                                                        </div>
+
+
+                                                        <div className="flex items-center">
+
+                                                            <TextSelect className="h-4 w-4"/>
+                                                             {resume.is_default? (
+                                                                <span className="text-sm text-green-600 px-2 py-1 font-medium">
+                                                                    Default
+                                                                </span>
+                                                            ): (
+                                                                <span className="text-sm text-red-600 px-2 py-1 font-medium">
+                                                                    Not Default
+                                                                </span>
+                                                            )}
+                                                        </div>
+
+
 
                                                     </div>
                                                 </div>
