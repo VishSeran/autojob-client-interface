@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Header from "../../../components/header";
 import { useResumes } from "../../../contexts/ResumeContext";
 
@@ -5,6 +6,8 @@ import { useResumes } from "../../../contexts/ResumeContext";
 export default function Resumes() {
 
     const {resumes, isLoading} = useResumes();
+
+    const[category, setCategory] = useState("view_resume")
 
     return (
 
@@ -15,16 +18,17 @@ export default function Resumes() {
 
             <div className="flex flex-col w-full items-center mt-8">
 
-                <div className="flex gap-20">
-                            <button>
-                                View Resumes
-                            </button>
+                <div className="flex gap-20 border border-slate-100 px-4 py-2 rounded-full shadow-lg">
 
-                            <button>
-                                Add Resume
-                            </button>
+                    <button className=`{"px-3 py-1 rounded-full text-white bg-blue-900 hover:text-blue-100"}`>
+                        View Resumes
+                    </button>
 
-                        </div>
+                    <button>
+                        Add Resume
+                    </button>
+
+                </div>
 
                 <div className="flex-col mt-15 items-center border border-slate-200 bg-slate-200 rounded-lg shadow-2xl">
 
