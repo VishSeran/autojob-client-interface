@@ -1,14 +1,10 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Resume } from "../types/resumes";
 import api from "../features/auth/api/axiosInstance";
-import Resumes from "../features/resumes/page/resumes";
 import { toast } from "sonner";
 
 
 
-type GetAllResumesResponse {
-    resumes: [Resume]
-}
 interface ResumeContextType {
 
     resumes: [Resume] | null;
@@ -91,7 +87,7 @@ export function useResumes() {
             "useresumes must be used inside ResumeProvider"
         );
     }
-    
+
     return context
 }
 
