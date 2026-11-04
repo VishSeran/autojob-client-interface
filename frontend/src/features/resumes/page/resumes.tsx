@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "../../../components/header";
 import { useResumes } from "../../../contexts/ResumeContext";
+import { DeleteIcon, DownloadIcon, GrabIcon, RecycleIcon, TrashIcon } from "lucide-react";
 
 
 export default function Resumes() {
@@ -55,7 +56,7 @@ export default function Resumes() {
 
                 </div>
 
-                <div className="flex-col mt-15 w-lg max-w-lg px-4 py-2 items-center border border-slate-200 bg-slate-200 rounded-lg shadow-2xl">
+                <div className="flex-col mt-15  px-4 py-2 items-center border border-slate-200 bg-linear-to-r from-gray-50 to-gray-100 rounded-lg shadow-2xl">
                     
                     <div className="flex-col">
 
@@ -65,15 +66,39 @@ export default function Resumes() {
                                 <div className="flex-col">
 
                             
-                                    <div className="flex-col">
+                                    <div className="flex flex-col gap-3">
 
                                         {
                                             resumes?.map((resume) => (
+                                                
 
-                                                <div className="flex justify-between"> 
+                                                <div className="flex flex-col gap-1 m-1 border border-slate-100 bg-white rounded-lg shadow-md"> 
 
-                                                    <h2 className="text-[17px] font-semibold font-mono"> {resume.filename} </h2>
-                                                    <h3 className="text-[15px]"> {formatDate(resume.create_at)}</h3>
+                                                    <div className="flex justify-between items-center gap-5 px-3 py-1 mx-3 my-1"> 
+                                                        <div>
+                                                            <h2 className="text-[18px]  font-semibold font-sans"> {resume.filename} </h2>
+
+                                                        </div>
+
+                                                        <div>
+
+                                                        <h3 className="text-[16px]"> {formatDate(resume.create_at)}</h3>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                    <div className="flex gap-1 justify-start px-3">
+
+                                                        <button className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500">
+                                                            <DownloadIcon className="h-4 w-4"/>
+                                                        </button>
+
+                                                        <button className="text-sm text-red-700 px-2 py-1 hover:text-red-500">
+                                                            <TrashIcon className="h-4 w-4"/>
+                                                        </button> 
+
+                                                    </div>
                                                 </div>
 
                                             ))
