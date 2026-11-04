@@ -1,11 +1,9 @@
 import { NavLink } from "react-router-dom"
 import AutoJobLogoLight from "../assets/autojob_logo_light.svg"
 import ProfileDropdown from "./profiledropdown";
-import { useUser } from "../contexts/UserContext";
+
 
 export default function Header(){
-
-    const {user, isLoading} = useUser();
 
     const links = [
         {
