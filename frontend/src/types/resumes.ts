@@ -2,6 +2,7 @@
 export interface Resume {
 
     filename: string,
-    create_at: Date,
+    create_at: string,
+    is_default: boolean
     
 }
