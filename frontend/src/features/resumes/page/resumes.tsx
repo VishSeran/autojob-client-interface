@@ -9,6 +9,17 @@ export default function Resumes() {
 
     const[category, setCategory] = useState("view_resumes")
 
+    const formatDate = (date:Date) => {
+
+        return new Date(date).toLocaleString("en-US",{
+            month:"short",
+            day:"2-digit",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
+        });
+    };
+
     return (
 
 
@@ -44,20 +55,40 @@ export default function Resumes() {
 
                 </div>
 
-                <div className="flex-col mt-15 items-center border border-slate-200 bg-slate-200 rounded-lg shadow-2xl">
-
+                <div className="flex-col mt-15 w-lg max-w-lg px-4 py-2 items-center border border-slate-200 bg-slate-200 rounded-lg shadow-2xl">
+                    
                     <div className="flex-col">
 
-                        
-                        <div className="flex">
+                        {
+                            category == "view_resumes"
+                            ? (
+                                <div className="flex-col">
 
-                            {
-                                resumes?.map((resume) => (
-                                    <p> {resume.filename} </p>
-                                ))
-                            }
-                        </div>
+                            
+                                    <div className="flex-col">
+
+                                        {
+                                            resumes?.map((resume) => (
+
+                                                <div className="flex justify-between"> 
+
+                                                    <h2 className="text-[17px] font-semibold font-mono"> {resume.filename} </h2>
+                                                    <h3 className="text-[15px]"> {formatDate(resume.create_at)}</h3>
+                                                </div>
+
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                            
+                            ):(
+                                <div> </div>
+                            )
+                            
+                        }
                     </div>
+
+                    
 
                 </div>
 
