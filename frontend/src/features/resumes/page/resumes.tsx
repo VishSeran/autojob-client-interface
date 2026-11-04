@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "../../../components/header";
 import { useResumes } from "../../../contexts/ResumeContext";
 import { ActivityIcon, BedDouble, BotOff, Bubbles, DeleteIcon, DownloadIcon, GrabIcon, RecycleIcon, SearchAlertIcon, TextSelect, TrashIcon } from "lucide-react";
+import api from "../../auth/api/axiosInstance";
 
 
 export default function Resumes() {
@@ -20,6 +21,18 @@ export default function Resumes() {
             minute:"2-digit"
         });
     };
+
+    const makeDefault = async () => {
+
+        try {
+
+            const response = await api.post
+
+        }catch (error) {
+
+        }
+
+    }
 
     return (
 
@@ -104,15 +117,26 @@ export default function Resumes() {
 
                                                         <div className="flex items-center">
 
-                                                            <TextSelect className="h-4 w-4"/>
+                                                            
                                                              {resume.is_default? (
-                                                                <span className="text-sm text-green-600 px-2 py-1 font-medium">
-                                                                    Default
-                                                                </span>
+                                                                <div className="flex items-center"> 
+                                                                    <TextSelect className="h-4 w-4"/>
+                                                                    <button className="text-sm text-green-600 px-2 py-1 font-medium">
+                                                                        Default
+                                                                    </button>
+                                                                </div>
+
                                                             ): (
-                                                                <span className="text-sm text-red-600 px-2 py-1 font-medium">
-                                                                    Not Default
-                                                                </span>
+                                                                <div className="flex items-center">
+                                                                    <button>
+                                                                        <TextSelect className="h-4 w-4"/>
+                                                                    </button> 
+                                                                    
+                                                                    <button 
+                                                                    className="text-sm text-red-600 px-2 py-1 font-medium">
+                                                                        Not Default
+                                                                    </button>
+                                                                </div>
                                                             )}
                                                         </div>
 

@@ -45,7 +45,12 @@ export function ResumeProvider({children}: ResumeProviderProps) {
             }
 
             const data = response.data
-            setResumes(data)
+
+            const sortedResumes = data.sort(
+                (a, b) => new Date(b.create_at).getTime() - new Date(a.create_at).getTime()
+            )
+
+            setResumes(sortedResumes)
 
         }catch (error) {
             console.error("Failed to fetch resumes", error)
