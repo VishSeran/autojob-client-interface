@@ -11,8 +11,9 @@ export default function Resumes() {
 
     const {resumes, isLoading, setResumes, refreshResumes} = useResumes();
 
-    const[category, setCategory] = useState("view_resumes")
+    const[category, setCategory] = useState("view_resumes");
     const [deleteResumeId, setDeleteResumeId] = useState(null);
+    const [isDeleteResume, setIsDeleteResume] = useState(false);
 
     const formatDate = (date:string) => {
 
@@ -203,7 +204,34 @@ export default function Resumes() {
                                                                     deleteResumeId == resume.id && (
                                                                         <div className="fixed z-50 inset-0 flex items-center justify-center bg-black/40">
                                                                             
-                                                                            <div className="">
+                                                                            <div className="w-96 rounded-xl bg-white shadow-xl">
+                                                                                <h2 className="text-lg font-semibold">
+                                                                                    Delete Resume?
+                                                                                </h2>
+
+                                                                                <p className="mt-2 text-sm text-gray-600">
+                                                                                    Are you sure you want to delete this resume?
+                                                                                    This action cannot be undone.
+                                                                                </p>
+
+                                                                                <div className="mt-5 flex justify-end gap-3"> 
+                                                                                    <button 
+                                                                                    onClick={() => setIsDeleteResume(false)}
+                                                                                    className="rounded-lg px-4 py-1 text-sm text-gray-700 hover:bg-gray-100">
+                                                                                        Cancel
+                                                                                    </button>
+
+
+                                                                                     <button
+                                                                                        onClick={() => {
+                                                                                            deleteResume(resume.id, resume.filename)
+                                                                                            setIsDeleteResume(true);
+                                                                                        }}
+                                                                                        className="rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+                                                                                    >
+                                                                                        Delete
+                                                                                    </button>
+                                                                                </div>
 
                                                                             </div>
 
