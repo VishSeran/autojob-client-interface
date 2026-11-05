@@ -11,7 +11,9 @@ export default function Resumes() {
 
     const {resumes, isLoading, setResumes, refreshResumes} = useResumes();
 
-    const[category, setCategory] = useState("view_resumes")
+    const[category, setCategory] = useState("view_resumes");
+    const [deleteResumeId, setDeleteResumeId] = useState(null);
+    const [isDeleteResume, setIsDeleteResume] = useState(false);
 
     const formatDate = (date:string) => {
 
@@ -53,6 +55,41 @@ export default function Resumes() {
 
     }
 
+    const deleteResume = async(id:string, name:string) => {
+
+
+        try{
+
+            const response = await api.delete(
+                `resume/${id}`
+            )
+
+            if (response.status != 200) {
+                console.error("Unable to delete resume due to internal server error")
+                toast.error("Unable to delete resume", {
+                    description:"Unable to delete resume due to internal server error"
+                })
+            }
+
+            
+
+            const data = response.data
+            console.log(data.message)
+            toast.success(data.message, {
+                description: `${name} - resume has deleted successfully`
+            })
+
+            await refreshResumes()
+
+
+        }catch(error){
+            console.log("Error in delete resume")
+            toast.error("Error while deleting resume", {
+                description:"Resume cannot delete or invalid error"
+            })
+        }
+    }
+
     if(!resumes) {
         return(
             <DashboardLoading/>
@@ -65,136 +102,188 @@ export default function Resumes() {
         <div className="flex-col">
 
             <Header />
+            
 
-            <div className="flex flex-col w-full items-center mt-8">
+            <div className="flex flex-col w-full items-center mt-8 ">
 
-                <div className="relative gap-5 text-sm border transition duration-300 border-slate-100 px-4 py-2 rounded-full shadow-lg">
+                <div className="rounded-full bg-linear-to-r from-blue-600 to-violet-600 p-[2px]">
 
-                    <div
-                    className={`absolute top-2 bottom-2 w-[calc(50%-12px)] rounded-full bg-blue-900 transition-all duration-600 ease-in-out
-                        ${
-                            category === "view_resumes"
-                                ? "left-2"
-                                : "left-[calc(50%+2px)]"
-                        }
-                    `}
-                    />
+                    <div className="relative gap-5 text-sm  transition duration-300  px-4 py-2 rounded-full shadow-lg bg-white">
 
-                    <button
-                    onClick={()=>setCategory("view_resumes")} 
-                    className={`relative px-5 py-1 rounded-full z-10
-                        ${
-                            category == "view_resumes"
-                            ? "font-semibold text-[17px]  text-white bg-blue-900"
-                            : "font-normal text-[15px] text-slate-700 hover:text-blue-900"
-                        }`}>
-                        View Resumes
-                    </button>
+                        <div
+                            className={`absolute top-2 bottom-2 w-[calc(50%-12px)] rounded-full bg-linear-to-r from-blue-600 to-violet-600 transition-all duration-600 ease-in-out
+                            ${
+                                category === "view_resumes"
+                                    ? "left-2"
+                                    : "left-[calc(50%+2px)]"
+                            }
+                        `}
+                        />
 
-                    <button
-                    onClick={() => setCategory("add_resume")}
-                    className={`relative z-10 px-5 py-1 rounded-full 
-                        ${
-                            category == "add_resume"
-                            ? "font-semibold text-[17px]  text-white bg-blue-900"
-                            : "font-normal text-[15px] text-slate-700 hover:text-blue-900"
-                        }`}>
-                        Add Resume
-                    </button>
+                        <button
+                        onClick={()=>setCategory("view_resumes")} 
+                        className={`relative px-5 py-1 rounded-full z-10
+                            ${
+                                category == "view_resumes"
+                                ? "font-semibold text-[17px]  text-white bg-linear-to-r from-blue-600 to-violet-600"
+                                : "font-normal text-[15px] text-slate-700 hover:text-blue-900"
+                            }`}>
+                            View Resumes
+                        </button>
 
+                        <button
+                        onClick={() => setCategory("add_resume")}
+                        className={`relative z-10 px-5 py-1 rounded-full 
+                            ${
+                                category == "add_resume"
+                                ? "font-semibold text-[17px]  text-white bg-linear-to-r from-blue-600 to-violet-600"
+                                : "font-normal text-[15px] text-slate-700 hover:text-blue-900"
+                            }`}>
+                            Add Resume
+                        </button>
+
+                    </div>
                 </div>
+                
+
+                
 
                 <div className="flex-col mt-15  px-4 py-2 items-center border border-slate-200 bg-linear-to-r from-gray-50 to-gray-100 rounded-lg shadow-2xl">
                     
-                    <div className="flex-col">
 
-                        {
-                            category == "view_resumes"
-                            ? (
-                                <div className="flex-col">
+                    <div className="rounded-lg bg-linear-to-r from-blue-600/40 to-violet-600/50 p-[1px]">
 
-                            
-                                    <div className="flex flex-col gap-3">
+                        <div className="flex-col">
 
-                                        {
-                                            resumes?.map((resume) => (
-                                                
+                            {
+                                category == "view_resumes"
+                                ? (
+                                    <div className="flex-col">
 
-                                                <div key={resume.id} className="flex flex-col gap-1 px-3 py-1 mx-3 my-1 border border-slate-100 bg-white rounded-lg shadow-md"> 
+                                
+                                        <div className="flex flex-col gap-3">
 
-                                                    <div className="flex justify-between items-center gap-5 px-3 py-1 mx-3 my-1"> 
-                                                        <div>
-                                                            <h2 className="text-[18px] my-1  font-semibold font-sans"> {resume.filename} </h2>
+                                            {
+                                                resumes?.map((resume) => (
+                                                    
+
+                                                    <div key={resume.id} className="flex flex-col gap-1 px-3 py-1 mx-3 my-1 border border-slate-100 bg-white rounded-lg shadow-md"> 
+
+                                                        <div className="flex justify-between items-center gap-5 px-3 py-1 mx-3 my-1"> 
+                                                            <div>
+                                                                <h2 className="text-[18px] my-1  font-semibold font-sans"> {resume.filename} </h2>
+
+                                                            </div>
+
+                                                            <div>
+
+                                                            <h3 className="text-[16px]"> {formatDate(resume.create_at)}</h3>
+                                                            </div>
+
 
                                                         </div>
 
-                                                        <div>
+                                                        <div className="flex gap-1 justify-between px-3 py-2">
 
-                                                        <h3 className="text-[16px]"> {formatDate(resume.create_at)}</h3>
+                                                            <div className="flex"> 
+
+                                                                <button className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500">
+                                                                    <DownloadIcon className="h-4 w-4"/>
+                                                                </button>
+
+                                                                <button
+                                                                    onClick={() => setDeleteResumeId(resume.id)}
+                                                                    className="text-sm text-red-700 px-2 py-1 hover:text-red-500">
+                                                                    <TrashIcon className="h-4 w-4"/>
+
+                                                                </button> 
+
+                                                            </div>
+
+                                                            {
+                                                                    deleteResumeId == resume.id && (
+                                                                        <div className="fixed z-50 inset-0 flex items-center justify-center bg-black/40">
+                                                                            
+                                                                            <div className="w-96 rounded-xl bg-white shadow-xl">
+                                                                                <h2 className="text-lg font-semibold">
+                                                                                    Delete Resume?
+                                                                                </h2>
+
+                                                                                <p className="mt-2 text-sm text-gray-600">
+                                                                                    Are you sure you want to delete this resume?
+                                                                                    This action cannot be undone.
+                                                                                </p>
+
+                                                                                <div className="mt-5 flex justify-end gap-3"> 
+                                                                                    <button 
+                                                                                    onClick={() => setIsDeleteResume(false)}
+                                                                                    className="rounded-lg px-4 py-1 text-sm text-gray-700 hover:bg-gray-100">
+                                                                                        Cancel
+                                                                                    </button>
+
+
+                                                                                     <button
+                                                                                        onClick={() => {
+                                                                                            deleteResume(resume.id, resume.filename)
+                                                                                            setIsDeleteResume(true);
+                                                                                        }}
+                                                                                        className="rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+                                                                                    >
+                                                                                        Delete
+                                                                                    </button>
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                        </div>
+                                                            )};
+
+                                                            <div className="flex items-center">
+
+                                                                
+                                                                {resume.is_default? (
+                                                                    <div className="flex items-center">
+
+                                                                        <button className="text-sm text-green-600 px-2 py-1 font-medium">
+                                                                            Default
+                                                                        </button>
+                                                                    </div>
+
+                                                                ): (
+                                                                    <div className="flex items-center gap-2">
+
+                                                                        <button 
+                                                                        className="text-sm text-red-600 px-2 py-1 font-medium">
+                                                                            Not Default
+                                                                        </button>
+                                                                        
+                                                                        <button onClick={() =>makeDefault(resume.id)}
+                                                                            className="px-2 py-1 bg-green-600 text-white rounded-lg
+                                                                            hover:bg-blue-500 hover:text-gray-100 focus:bg-green-400 shadow-lg focus:scale-95">
+                                                                            Make Default
+                                                                        </button>  
+                                                                        
+                                                                        
+                                                                    </div>
+                                                                )}
+                                                            </div>
+
+
+
                                                         </div>
-
-
                                                     </div>
 
-                                                    <div className="flex gap-1 justify-between px-3 py-2">
-
-                                                        <div className="flex "> 
-
-                                                        <button className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500">
-                                                            <DownloadIcon className="h-4 w-4"/>
-                                                        </button>
-
-                                                        <button className="text-sm text-red-700 px-2 py-1 hover:text-red-500">
-                                                            <TrashIcon className="h-4 w-4"/>
-                                                        </button> 
-                                                        </div>
-
-
-                                                        <div className="flex items-center">
-
-                                                            
-                                                             {resume.is_default? (
-                                                                <div className="flex items-center">
-
-                                                                    <button className="text-sm text-green-600 px-2 py-1 font-medium">
-                                                                        Default
-                                                                    </button>
-                                                                </div>
-
-                                                            ): (
-                                                                <div className="flex items-center gap-2">
-
-                                                                    <button 
-                                                                    className="text-sm text-red-600 px-2 py-1 font-medium">
-                                                                        Not Default
-                                                                    </button>
-                                                                    
-                                                                    <button onClick={() =>makeDefault(resume.id)}
-                                                                        className="px-2 py-1 bg-green-600 text-white rounded-lg
-                                                                        hover:bg-blue-500 hover:text-gray-100 focus:bg-green-400 shadow-lg focus:scale-95">
-                                                                        Make Default
-                                                                    </button>  
-                                                                    
-                                                                    
-                                                                </div>
-                                                            )}
-                                                        </div>
-
-
-
-                                                    </div>
-                                                </div>
-
-                                            ))
-                                        }
+                                                ))
+                                            }
+                                        </div>
                                     </div>
-                                </div>
-                            
-                            ):(
-                                <div> </div>
-                            )
-                            
-                        }
+                                
+                                ):(
+                                    <div> </div>
+                                )
+                                
+                            }
+                        </div>
                     </div>
 
                     
