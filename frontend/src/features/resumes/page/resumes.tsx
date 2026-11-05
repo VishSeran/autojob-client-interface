@@ -26,7 +26,7 @@ export default function Resumes() {
         });
     };
 
-    const makeDefault = async (id:string) => {
+    const makeDefault = async (id:string, name:string) => {
 
         try {
 
@@ -43,7 +43,9 @@ export default function Resumes() {
 
             const data = response.data
             console.log(data.message)
-            toast.success(data.message)
+            toast.success(data.message, {
+                description: `${name} - resume has set to default successfully`
+            })
 
             await refreshResumes();
 
@@ -148,12 +150,12 @@ export default function Resumes() {
 
                 
 
-                <div className="flex-col mt-15  px-4 py-2 items-center border border-slate-200 bg-linear-to-r from-gray-50 to-gray-100 rounded-lg shadow-2xl">
+                <div className="flex-col mt-15 mb-15 px-4 py-2 items-center border border-slate-200 bg-white rounded-lg shadow-2xl">
                     
 
-                    <div className="rounded-lg bg-linear-to-r from-blue-600/40 to-violet-600/50 p-[1px]">
+                    <div className="rounded-lg bg-linear-to-r from-blue-600/40 to-violet-600/50 p-[5px]">
 
-                        <div className="flex-col">
+                        <div className="flex-col m-2">
 
                             {
                                 category == "view_resumes"
@@ -205,18 +207,22 @@ export default function Resumes() {
                                                                         <div className="fixed z-50 inset-0 flex items-center justify-center bg-black/40">
                                                                             
                                                                             <div className="w-96 rounded-xl bg-white shadow-xl">
-                                                                                <h2 className="text-lg font-semibold">
+                                                                                <h2 className="text-lg font-semibold m-2">
                                                                                     Delete Resume?
                                                                                 </h2>
 
-                                                                                <p className="mt-2 text-sm text-gray-600">
+                                                                                <p className="mt-2 text-sm text-gray-600 m-2">
                                                                                     Are you sure you want to delete this resume?
                                                                                     This action cannot be undone.
                                                                                 </p>
 
-                                                                                <div className="mt-5 flex justify-end gap-3"> 
+                                                                                <div className="m-3 flex justify-end gap-3"> 
                                                                                     <button 
-                                                                                    onClick={() => setIsDeleteResume(false)}
+                                                                                    onClick={() => {
+                                                                                        setIsDeleteResume(false);
+                                                                                        setDeleteResumeId(null)
+                                                                                    }
+                                                                                    }
                                                                                     className="rounded-lg px-4 py-1 text-sm text-gray-700 hover:bg-gray-100">
                                                                                         Cancel
                                                                                     </button>
@@ -227,7 +233,8 @@ export default function Resumes() {
                                                                                             deleteResume(resume.id, resume.filename)
                                                                                             setIsDeleteResume(true);
                                                                                         }}
-                                                                                        className="rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+                                                                                        className="rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 focus:bg-red-600
+                                                                                        focus:scale-95"
                                                                                     >
                                                                                         Delete
                                                                                     </button>
@@ -257,8 +264,8 @@ export default function Resumes() {
                                                                             Not Default
                                                                         </button>
                                                                         
-                                                                        <button onClick={() =>makeDefault(resume.id)}
-                                                                            className="px-2 py-1 bg-green-600 text-white rounded-lg
+                                                                        <button onClick={() =>makeDefault(resume.id, resume.filename)}
+                                                                            className="px-2 py-1 bg-green-600 text-white rounded-lg text-sm
                                                                             hover:bg-blue-500 hover:text-gray-100 focus:bg-green-400 shadow-lg focus:scale-95">
                                                                             Make Default
                                                                         </button>  
