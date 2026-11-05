@@ -12,6 +12,7 @@ export default function Resumes() {
     const {resumes, isLoading, setResumes, refreshResumes} = useResumes();
 
     const[category, setCategory] = useState("view_resumes")
+    const [deleteResumeId, setDeleteResumeId] = useState(null);
 
     const formatDate = (date:string) => {
 
@@ -183,19 +184,31 @@ export default function Resumes() {
 
                                                         <div className="flex gap-1 justify-between px-3 py-2">
 
-                                                            <div className="flex "> 
+                                                            <div className="flex"> 
 
-                                                            <button className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500">
-                                                                <DownloadIcon className="h-4 w-4"/>
-                                                            </button>
+                                                                <button className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500">
+                                                                    <DownloadIcon className="h-4 w-4"/>
+                                                                </button>
 
-                                                            <button
-                                                                onClick={() => deleteResume(resume.id, resume.filename)}
-                                                                className="text-sm text-red-700 px-2 py-1 hover:text-red-500">
-                                                                <TrashIcon className="h-4 w-4"/>
-                                                            </button> 
+                                                                <button
+                                                                    onClick={() => setDeleteResumeId(resume.id)}
+                                                                    className="text-sm text-red-700 px-2 py-1 hover:text-red-500">
+                                                                    <TrashIcon className="h-4 w-4"/>
+
+                                                                </button> 
+
                                                             </div>
 
+                                                            {
+                                                                    deleteResumeId == resume.id && (
+                                                                        <div className="fixed z-50 inset-0 flex items-center justify-center bg-black/40">
+                                                                            
+                                                                            <div className="">
+
+                                                                            </div>
+
+                                                                        </div>
+                                                            )};
 
                                                             <div className="flex items-center">
 
