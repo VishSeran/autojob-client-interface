@@ -53,6 +53,20 @@ export default function Resumes() {
 
     }
 
+    const deleteResume = async(id) => {
+
+        try{
+
+            
+
+        }catch(error){
+            console.log("Error in delete resume")
+            toast.error("Error while deleting resume", {
+                description:"Resume cannot delete or invalid error"
+            })
+        }
+    }
+
     if(!resumes) {
         return(
             <DashboardLoading/>
@@ -107,98 +121,105 @@ export default function Resumes() {
 
                     </div>
                 </div>
+                
+
+                
 
                 <div className="flex-col mt-15  px-4 py-2 items-center border border-slate-200 bg-linear-to-r from-gray-50 to-gray-100 rounded-lg shadow-2xl">
                     
-                    <div className="flex-col">
 
-                        {
-                            category == "view_resumes"
-                            ? (
-                                <div className="flex-col">
+                    <div className="rounded-lg bg-linear-to-r from-blue-600/40 to-violet-600/50 p-[1px]">
 
-                            
-                                    <div className="flex flex-col gap-3">
+                        <div className="flex-col">
 
-                                        {
-                                            resumes?.map((resume) => (
-                                                
+                            {
+                                category == "view_resumes"
+                                ? (
+                                    <div className="flex-col">
 
-                                                <div key={resume.id} className="flex flex-col gap-1 px-3 py-1 mx-3 my-1 border border-slate-100 bg-white rounded-lg shadow-md"> 
+                                
+                                        <div className="flex flex-col gap-3">
 
-                                                    <div className="flex justify-between items-center gap-5 px-3 py-1 mx-3 my-1"> 
-                                                        <div>
-                                                            <h2 className="text-[18px] my-1  font-semibold font-sans"> {resume.filename} </h2>
+                                            {
+                                                resumes?.map((resume) => (
+                                                    
+
+                                                    <div key={resume.id} className="flex flex-col gap-1 px-3 py-1 mx-3 my-1 border border-slate-100 bg-white rounded-lg shadow-md"> 
+
+                                                        <div className="flex justify-between items-center gap-5 px-3 py-1 mx-3 my-1"> 
+                                                            <div>
+                                                                <h2 className="text-[18px] my-1  font-semibold font-sans"> {resume.filename} </h2>
+
+                                                            </div>
+
+                                                            <div>
+
+                                                            <h3 className="text-[16px]"> {formatDate(resume.create_at)}</h3>
+                                                            </div>
+
 
                                                         </div>
 
-                                                        <div>
+                                                        <div className="flex gap-1 justify-between px-3 py-2">
 
-                                                        <h3 className="text-[16px]"> {formatDate(resume.create_at)}</h3>
+                                                            <div className="flex "> 
+
+                                                            <button className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500">
+                                                                <DownloadIcon className="h-4 w-4"/>
+                                                            </button>
+
+                                                            <button className="text-sm text-red-700 px-2 py-1 hover:text-red-500">
+                                                                <TrashIcon className="h-4 w-4"/>
+                                                            </button> 
+                                                            </div>
+
+
+                                                            <div className="flex items-center">
+
+                                                                
+                                                                {resume.is_default? (
+                                                                    <div className="flex items-center">
+
+                                                                        <button className="text-sm text-green-600 px-2 py-1 font-medium">
+                                                                            Default
+                                                                        </button>
+                                                                    </div>
+
+                                                                ): (
+                                                                    <div className="flex items-center gap-2">
+
+                                                                        <button 
+                                                                        className="text-sm text-red-600 px-2 py-1 font-medium">
+                                                                            Not Default
+                                                                        </button>
+                                                                        
+                                                                        <button onClick={() =>makeDefault(resume.id)}
+                                                                            className="px-2 py-1 bg-green-600 text-white rounded-lg
+                                                                            hover:bg-blue-500 hover:text-gray-100 focus:bg-green-400 shadow-lg focus:scale-95">
+                                                                            Make Default
+                                                                        </button>  
+                                                                        
+                                                                        
+                                                                    </div>
+                                                                )}
+                                                            </div>
+
+
+
                                                         </div>
-
-
                                                     </div>
 
-                                                    <div className="flex gap-1 justify-between px-3 py-2">
-
-                                                        <div className="flex "> 
-
-                                                        <button className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500">
-                                                            <DownloadIcon className="h-4 w-4"/>
-                                                        </button>
-
-                                                        <button className="text-sm text-red-700 px-2 py-1 hover:text-red-500">
-                                                            <TrashIcon className="h-4 w-4"/>
-                                                        </button> 
-                                                        </div>
-
-
-                                                        <div className="flex items-center">
-
-                                                            
-                                                             {resume.is_default? (
-                                                                <div className="flex items-center">
-
-                                                                    <button className="text-sm text-green-600 px-2 py-1 font-medium">
-                                                                        Default
-                                                                    </button>
-                                                                </div>
-
-                                                            ): (
-                                                                <div className="flex items-center gap-2">
-
-                                                                    <button 
-                                                                    className="text-sm text-red-600 px-2 py-1 font-medium">
-                                                                        Not Default
-                                                                    </button>
-                                                                    
-                                                                    <button onClick={() =>makeDefault(resume.id)}
-                                                                        className="px-2 py-1 bg-green-600 text-white rounded-lg
-                                                                        hover:bg-blue-500 hover:text-gray-100 focus:bg-green-400 shadow-lg focus:scale-95">
-                                                                        Make Default
-                                                                    </button>  
-                                                                    
-                                                                    
-                                                                </div>
-                                                            )}
-                                                        </div>
-
-
-
-                                                    </div>
-                                                </div>
-
-                                            ))
-                                        }
+                                                ))
+                                            }
+                                        </div>
                                     </div>
-                                </div>
-                            
-                            ):(
-                                <div> </div>
-                            )
-                            
-                        }
+                                
+                                ):(
+                                    <div> </div>
+                                )
+                                
+                            }
+                        </div>
                     </div>
 
                     
