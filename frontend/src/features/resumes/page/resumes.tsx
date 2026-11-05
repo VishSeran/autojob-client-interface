@@ -55,6 +55,7 @@ export default function Resumes() {
 
     const deleteResume = async(id:string, name:string) => {
 
+
         try{
 
             const response = await api.delete(
@@ -68,11 +69,15 @@ export default function Resumes() {
                 })
             }
 
+            
+
             const data = response.data
             console.log(data.message)
             toast.success(data.message, {
                 description: `${name} - resume has deleted successfully`
             })
+
+            await refreshResumes()
 
 
         }catch(error){
@@ -184,7 +189,9 @@ export default function Resumes() {
                                                                 <DownloadIcon className="h-4 w-4"/>
                                                             </button>
 
-                                                            <button className="text-sm text-red-700 px-2 py-1 hover:text-red-500">
+                                                            <button
+                                                                onClick={() => deleteResume(resume.id, resume.filename)}
+                                                                className="text-sm text-red-700 px-2 py-1 hover:text-red-500">
                                                                 <TrashIcon className="h-4 w-4"/>
                                                             </button> 
                                                             </div>

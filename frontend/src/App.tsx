@@ -40,7 +40,7 @@ function App() {
         position='top-right'
         richColors
         closeButton
-        duration={4000}
+        duration={6000}
 
       />
     </>
