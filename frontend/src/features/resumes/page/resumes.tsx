@@ -53,11 +53,27 @@ export default function Resumes() {
 
     }
 
-    const deleteResume = async(id) => {
+    const deleteResume = async(id:string, name:string) => {
 
         try{
 
-            
+            const response = await api.delete(
+                `resume/${id}`
+            )
+
+            if (response.status != 200) {
+                console.error("Unable to delete resume due to internal server error")
+                toast.error("Unable to delete resume", {
+                    description:"Unable to delete resume due to internal server error"
+                })
+            }
+
+            const data = response.data
+            console.log(data.message)
+            toast.success(data.message, {
+                description: `${name} - resume has deleted successfully`
+            })
+
 
         }catch(error){
             console.log("Error in delete resume")
