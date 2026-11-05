@@ -1,33 +1,23 @@
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Header from "../../../components/header";
 import { useUser } from "../../../contexts/UserContext";
 import DashboardLoading from "../../../components/LoadingScreen";
 
-
 export default function Dashboard() {
 
-    const {user, isLoading} = useUser();
+    const { user, isLoading } = useUser();
+
+    if (isLoading) {
+        return <DashboardLoading />;
+    }
 
     if (!user) {
-
-        return (
-            <DashboardLoading/>
-        )
+        return <Navigate to="/login" replace />;
     }
 
-    if (user) {
-
-        return  (
-
+    return (
         <div>
-            <Header/>
+            <Header />
         </div>
-
-        )
-        
-    }
-
-    
-
-       
+    );
 }

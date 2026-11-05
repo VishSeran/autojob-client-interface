@@ -65,43 +65,47 @@ export default function Resumes() {
         <div className="flex-col">
 
             <Header />
+            
 
-            <div className="flex flex-col w-full items-center mt-8">
+            <div className="flex flex-col w-full items-center mt-8 ">
 
-                <div className="relative gap-5 text-sm border transition duration-300 border-slate-100 px-4 py-2 rounded-full shadow-lg">
+                <div className="rounded-full bg-linear-to-r from-blue-600 to-violet-600 p-[2px]">
 
-                    <div
-                    className={`absolute top-2 bottom-2 w-[calc(50%-12px)] rounded-full bg-blue-900 transition-all duration-600 ease-in-out
-                        ${
-                            category === "view_resumes"
-                                ? "left-2"
-                                : "left-[calc(50%+2px)]"
-                        }
-                    `}
-                    />
+                    <div className="relative gap-5 text-sm  transition duration-300  px-4 py-2 rounded-full shadow-lg bg-white">
 
-                    <button
-                    onClick={()=>setCategory("view_resumes")} 
-                    className={`relative px-5 py-1 rounded-full z-10
-                        ${
-                            category == "view_resumes"
-                            ? "font-semibold text-[17px]  text-white bg-blue-900"
-                            : "font-normal text-[15px] text-slate-700 hover:text-blue-900"
-                        }`}>
-                        View Resumes
-                    </button>
+                        <div
+                            className={`absolute top-2 bottom-2 w-[calc(50%-12px)] rounded-full bg-linear-to-r from-blue-600 to-violet-600 transition-all duration-600 ease-in-out
+                            ${
+                                category === "view_resumes"
+                                    ? "left-2"
+                                    : "left-[calc(50%+2px)]"
+                            }
+                        `}
+                        />
 
-                    <button
-                    onClick={() => setCategory("add_resume")}
-                    className={`relative z-10 px-5 py-1 rounded-full 
-                        ${
-                            category == "add_resume"
-                            ? "font-semibold text-[17px]  text-white bg-blue-900"
-                            : "font-normal text-[15px] text-slate-700 hover:text-blue-900"
-                        }`}>
-                        Add Resume
-                    </button>
+                        <button
+                        onClick={()=>setCategory("view_resumes")} 
+                        className={`relative px-5 py-1 rounded-full z-10
+                            ${
+                                category == "view_resumes"
+                                ? "font-semibold text-[17px]  text-white bg-linear-to-r from-blue-600 to-violet-600"
+                                : "font-normal text-[15px] text-slate-700 hover:text-blue-900"
+                            }`}>
+                            View Resumes
+                        </button>
 
+                        <button
+                        onClick={() => setCategory("add_resume")}
+                        className={`relative z-10 px-5 py-1 rounded-full 
+                            ${
+                                category == "add_resume"
+                                ? "font-semibold text-[17px]  text-white bg-linear-to-r from-blue-600 to-violet-600"
+                                : "font-normal text-[15px] text-slate-700 hover:text-blue-900"
+                            }`}>
+                            Add Resume
+                        </button>
+
+                    </div>
                 </div>
 
                 <div className="flex-col mt-15  px-4 py-2 items-center border border-slate-200 bg-linear-to-r from-gray-50 to-gray-100 rounded-lg shadow-2xl">
