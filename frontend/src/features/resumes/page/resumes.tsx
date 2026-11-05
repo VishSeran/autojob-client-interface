@@ -92,6 +92,26 @@ export default function Resumes() {
         }
     }
 
+    const downloadResume = async (id:string, name:string) => {
+
+        try{
+
+            const response = await api.get(
+                `resume/download/${id}`
+            )
+
+            if(response.status != 200) {
+                
+            }
+
+        }catch (error) {
+            console.log("Error in downloading resume")
+            toast.error("Error while downloading resume", {
+                description:"Resume cannot download or invalid error"
+            })
+        }
+    }
+
     if(!resumes) {
         return(
             <DashboardLoading/>
