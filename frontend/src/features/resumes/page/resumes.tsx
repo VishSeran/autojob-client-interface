@@ -26,7 +26,7 @@ export default function Resumes() {
         });
     };
 
-    const makeDefault = async (id:string) => {
+    const makeDefault = async (id:string, name:string) => {
 
         try {
 
@@ -43,7 +43,9 @@ export default function Resumes() {
 
             const data = response.data
             console.log(data.message)
-            toast.success(data.message)
+            toast.success(data.message, {
+                description: `${name} - resume has set to default successfully`
+            })
 
             await refreshResumes();
 
@@ -86,6 +88,55 @@ export default function Resumes() {
             console.log("Error in delete resume")
             toast.error("Error while deleting resume", {
                 description:"Resume cannot delete or invalid error"
+            })
+        }
+    }
+
+    const downloadResume = async (id:string, name:string) => {
+
+        try{
+
+            const response = await api.get(
+                `resume/download/${id}`,
+                
+                {
+                    responseType: "blob",
+                }
+            )
+
+            if(response.status != 200) {
+                console.error("Unable to download resume due to internal server error")
+                toast.error("Unable to download resume", {
+                    description:"Unable to download resume due to internal server error"
+                })
+            };
+
+            const data = response.data;
+
+            const blob = new Blob([data], {
+                type: "application/pdf"
+            });
+
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            
+            link.href = url;
+            link.download = name;
+
+            document.body.appendChild(link);
+            link.click();
+
+            link.remove();
+
+            window.URL.revokeObjectURL(url);
+
+            console.log(`${name} - resume downloaded successfully`);
+            toast.success(`${name} - resume downloaded successfully`);
+
+        }catch (error) {
+            console.log("Error in downloading resume")
+            toast.error("Error while downloading resume", {
+                description:"Resume cannot download or invalid error"
             })
         }
     }
@@ -148,12 +199,12 @@ export default function Resumes() {
 
                 
 
-                <div className="flex-col mt-15  px-4 py-2 items-center border border-slate-200 bg-linear-to-r from-gray-50 to-gray-100 rounded-lg shadow-2xl">
+                <div className="flex-col mt-15 mb-15 px-4 py-2 items-center border border-slate-200 bg-white rounded-lg shadow-2xl">
                     
 
-                    <div className="rounded-lg bg-linear-to-r from-blue-600/40 to-violet-600/50 p-[1px]">
+                    <div className="rounded-lg bg-linear-to-r from-blue-600/40 to-violet-600/50 p-[5px]">
 
-                        <div className="flex-col">
+                        <div className="flex-col m-2">
 
                             {
                                 category == "view_resumes"
@@ -187,7 +238,9 @@ export default function Resumes() {
 
                                                             <div className="flex"> 
 
-                                                                <button className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500">
+                                                                <button
+                                                                onClick={() => downloadResume(resume.id, resume.filename)} 
+                                                                className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500 focus:scale-90">
                                                                     <DownloadIcon className="h-4 w-4"/>
                                                                 </button>
 
@@ -204,19 +257,23 @@ export default function Resumes() {
                                                                     deleteResumeId == resume.id && (
                                                                         <div className="fixed z-50 inset-0 flex items-center justify-center bg-black/40">
                                                                             
-                                                                            <div className="w-96 rounded-xl bg-white shadow-xl">
-                                                                                <h2 className="text-lg font-semibold">
+                                                                            <div className="w-110 rounded-xl bg-white shadow-xl ">
+                                                                                <h2 className="text-lg font-semibold m-2 px-3 py-2">
                                                                                     Delete Resume?
                                                                                 </h2>
 
-                                                                                <p className="mt-2 text-sm text-gray-600">
+                                                                                <p className="mt-2 text-sm text-gray-600 m-2 px-3 py-2">
                                                                                     Are you sure you want to delete this resume?
                                                                                     This action cannot be undone.
                                                                                 </p>
 
-                                                                                <div className="mt-5 flex justify-end gap-3"> 
+                                                                                <div className="m-3 px-3 py-2 flex justify-end gap-3"> 
                                                                                     <button 
-                                                                                    onClick={() => setIsDeleteResume(false)}
+                                                                                    onClick={() => {
+                                                                                        setIsDeleteResume(false);
+                                                                                        setDeleteResumeId(null)
+                                                                                    }
+                                                                                    }
                                                                                     className="rounded-lg px-4 py-1 text-sm text-gray-700 hover:bg-gray-100">
                                                                                         Cancel
                                                                                     </button>
@@ -227,7 +284,8 @@ export default function Resumes() {
                                                                                             deleteResume(resume.id, resume.filename)
                                                                                             setIsDeleteResume(true);
                                                                                         }}
-                                                                                        className="rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+                                                                                        className="rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 focus:bg-red-600
+                                                                                        focus:scale-95"
                                                                                     >
                                                                                         Delete
                                                                                     </button>
@@ -244,7 +302,7 @@ export default function Resumes() {
                                                                 {resume.is_default? (
                                                                     <div className="flex items-center">
 
-                                                                        <button className="text-sm text-green-600 px-2 py-1 font-medium">
+                                                                        <button className="text-sm text-violet-600 px-2 py-1 font-medium">
                                                                             Default
                                                                         </button>
                                                                     </div>
@@ -257,9 +315,9 @@ export default function Resumes() {
                                                                             Not Default
                                                                         </button>
                                                                         
-                                                                        <button onClick={() =>makeDefault(resume.id)}
-                                                                            className="px-2 py-1 bg-green-600 text-white rounded-lg
-                                                                            hover:bg-blue-500 hover:text-gray-100 focus:bg-green-400 shadow-lg focus:scale-95">
+                                                                        <button onClick={() =>makeDefault(resume.id, resume.filename)}
+                                                                            className="px-2 py-1 bg-violet-600 text-white rounded-lg text-sm
+                                                                            hover:bg-green-500 hover:text-gray-100 focus:bg-green-400 shadow-lg focus:scale-95">
                                                                             Make Default
                                                                         </button>  
                                                                         
