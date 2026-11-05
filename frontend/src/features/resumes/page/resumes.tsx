@@ -97,7 +97,11 @@ export default function Resumes() {
         try{
 
             const response = await api.get(
-                `resume/download/${id}`
+                `resume/download/${id}`,
+                
+                {
+                    responseType: "blob",
+                }
             )
 
             if(response.status != 200) {
@@ -105,11 +109,29 @@ export default function Resumes() {
                 toast.error("Unable to download resume", {
                     description:"Unable to download resume due to internal server error"
                 })
-            }
+            };
 
-            const data = response.data
-            console.log(`${name} - resume downloaded successfully`)
-            toast.success(`${name} - resume downloaded successfully`)
+            const data = response.data;
+
+            const blob = new Blob([data], {
+                type: "application/pdf"
+            });
+
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            
+            link.href = url;
+            link.download = name;
+
+            document.body.appendChild(link);
+            link.click();
+
+            link.remove();
+
+            window.URL.revokeObjectURL(url);
+
+            console.log(`${name} - resume downloaded successfully`);
+            toast.success(`${name} - resume downloaded successfully`);
 
         }catch (error) {
             console.log("Error in downloading resume")
@@ -216,7 +238,9 @@ export default function Resumes() {
 
                                                             <div className="flex"> 
 
-                                                                <button className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500">
+                                                                <button
+                                                                onClick={() => downloadResume(resume.id, resume.filename)} 
+                                                                className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500">
                                                                     <DownloadIcon className="h-4 w-4"/>
                                                                 </button>
 
