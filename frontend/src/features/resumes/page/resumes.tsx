@@ -101,8 +101,15 @@ export default function Resumes() {
             )
 
             if(response.status != 200) {
-                
+                console.error("Unable to download resume due to internal server error")
+                toast.error("Unable to download resume", {
+                    description:"Unable to download resume due to internal server error"
+                })
             }
+
+            const data = response.data
+            console.log(`${name} - resume downloaded successfully`)
+            toast.success(`${name} - resume downloaded successfully`)
 
         }catch (error) {
             console.log("Error in downloading resume")
