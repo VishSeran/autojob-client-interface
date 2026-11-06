@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import Header from "../../../components/header";
 import { useResumes } from "../../../contexts/ResumeContext";
-import {DownloadIcon, FileText, TrashIcon, UploadIcon } from "lucide-react";
+import {DownloadIcon, File, FileText, TrashIcon, UploadIcon } from "lucide-react";
 import api from "../../auth/api/axiosInstance";
 import { toast } from "sonner";
 import DashboardLoading from "../../../components/LoadingScreen";
@@ -431,7 +431,16 @@ export default function Resumes() {
                                     </p>
                                 </div>
 
-                                <div className="group w-full max-w-2xl min-h-[270px]
+                                {
+                                    !selectedFile ? (
+                                        <div onClick={() => fileInputRef.current?.click()}
+                                        onDragOver={(event) => {
+                                            event.preventDefault();
+                                            setIsDragging(true);
+                                        }}
+                                        onDragLeave={()=> setIsDragging(false)}
+                                        onDrop={handleDrop}
+                                        className="group w-full max-w-2xl min-h-[270px]
                                 flex flex-col items-center justify-center border-2 border-dashed border-slate-700 rounded-lg
                                 bg-slate-900/50 transition-all duration-300 hover:border-blue-500/70 hover:bg-slate-900
                                 cursor-pointer">
@@ -461,7 +470,49 @@ export default function Resumes() {
                                         <span>Max 10 MB</span>
                                     </div>
 
+                                    <input
+                                        ref={fileInputRef}
+                                        type="file"
+                                        accept=".pdf"
+                                        onChange={handleFileChange}
+                                        className="hidden" 
+                                    />
+
                                 </div>
+
+                                    ): (
+
+                                        <div className="group flex flex-col items-center justify-center gap-2 border
+                                         border-slate-900/80 w-full max-w-3xl  rounded-3xl hover:bg-slate-700/30 transition-all duration-300 mt-3">
+                                            
+                                            <div className="flex items-center justify-between w-full m-2 p-5 group-hover:scale-105 transition-all duration-300">
+
+
+                                                <div className="flex items-center gap-5 m-2">
+
+                                                    <div className="text-blue-400">
+                                                        <FileText className="h-7 w-7 text-slate-300"/>
+                                                    </div>
+
+                                                    
+                                                    <div className="flex flex-col">
+                                                        <h2 className="text-white font-semibold">{selectedFile.name}</h2>
+                                                        <p className="text-slate-300 text-sm ">{(selectedFile.size/1024/1024).toFixed(2)} MB</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="m-2">
+                                                    <FileText className="h-4 w-4 text-slate-300"/>
+                                                </div>
+                                            </div>
+
+                                            
+
+                                        </div>
+                                    )
+                                }
+
+                                
 
                             </div>
 
