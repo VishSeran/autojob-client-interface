@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Header from "../../../components/header";
 import { useResumes } from "../../../contexts/ResumeContext";
-import { ActivityIcon, BedDouble, BotOff, BrushCleaningIcon, Bubbles, DeleteIcon, DownloadIcon, GrabIcon, RecycleIcon, SearchAlertIcon, TextSelect, TrashIcon } from "lucide-react";
+import {CheckCircle, CheckCircle2, CheckCircleIcon, DownloadIcon, File, FileText, TrashIcon, UploadIcon, X } from "lucide-react";
 import api from "../../auth/api/axiosInstance";
 import { toast } from "sonner";
 import DashboardLoading from "../../../components/LoadingScreen";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -16,6 +16,11 @@ export default function Resumes() {
 
     const [category, setCategory] = useState<Category>("view_resumes");
     const [deleteResumeId, setDeleteResumeId] = useState(null);
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [isDragging, setIsDragging] = useState(false);
+    const navigate = useNavigate();
 
     const formatDate = (date: string) => {
 
@@ -59,7 +64,7 @@ export default function Resumes() {
 
     }
 
-    const deleteResume = async (id: string, name: string) => {
+    const deleteResume = async (id:any, name: string) => {
 
 
         try {
@@ -143,6 +148,100 @@ export default function Resumes() {
         }
     }
 
+    const handleFileUpload = (file:File) => {
+
+        const allowedTypes = [
+            "application/pdf"
+        ];
+
+        if (!allowedTypes.includes(file.type)) {
+            toast.warning("Please upload a PDf file");
+            return;
+        }
+
+        setSelectedFile(file)
+    }
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+        const file = e.target.files?.[0];
+
+        if (file) {
+            handleFileUpload(file);
+        }
+    }
+
+    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+
+        e.preventDefault();
+        setIsDragging(true);
+
+        const file = e.dataTransfer.files?.[0]
+
+        if(file){
+            handleFileUpload(file);
+        }
+    };
+
+    const removeFile = () => {
+        setSelectedFile(null)
+
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    };
+
+    const handleResumeSubmit = async() => {
+
+        try{
+
+            if (!selectedFile) {
+                toast.error("Please select a resume first");
+                return;
+            }
+
+            console.log("Selected file:", selectedFile);
+            console.log("File name:", selectedFile?.name);
+            console.log("File type:", selectedFile?.type);
+            console.log("File size:", selectedFile?.size);
+            const formData = new FormData();
+            formData.append("file", selectedFile);
+
+            for (const [key, value] of formData.entries()) {
+                console.log("FormData:", key, value);
+            }
+
+            const response = await api.post(
+                "resume/upload",
+                formData
+            )
+    
+            if(response.status != 200) {
+                console.error("Unable to upload the resume")
+                toast.error("Unable to upload the resume",{
+                    description:"Internal server error"
+                })
+            }
+    
+            const data = response.data
+    
+            console.log(data.message)
+            toast.success(data.message, {
+                description: `${selectedFile?.name} - resume has uploaded successfully`
+            })
+
+            await refreshResumes();
+
+        }catch(error){
+            console.log("Error in uploading resume")
+            toast.error("Error while uploading resume", {
+                description: "Resume cannot upload or invalid error"
+            })
+        }
+
+
+    }
+
 
 
     return (
@@ -203,12 +302,14 @@ export default function Resumes() {
 
                 {
                     category == "view_resumes" && (
-                        <div className="flex-col">
+                        <div className="flex-col transition-all duration-300">
 
                             <div className="flex-col mt-15 mb-15 px-4 py-2 items-center border border-slate-200 bg-white rounded-lg shadow-2xl">
 
 
-                                <div className="rounded-lg bg-linear-to-r from-blue-600/40 to-violet-600/50 p-[5px]">
+                                <div className="relative rounded-lg border border-slate-800 bg-slate-900 shadow-lg p-[5px]">
+                                    <div className="absolute pointer-events-none h-120 w-120 bg-blue-600/20 -top-32 -left-32 rounded-full blur-3xl "/>
+                            <div className="absolute pointer-events-none h-120 w-120 bg-violet-600/20 -bottom-32 -right-32 rounded-full blur-3xl "/>
 
                                     <div className="flex-col m-2">
 
@@ -242,18 +343,24 @@ export default function Resumes() {
 
                                                                 <div className="flex">
 
-                                                                    <button
-                                                                        onClick={() => downloadResume(resume.id, resume.filename)}
-                                                                        className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500 focus:scale-90">
-                                                                        <DownloadIcon className="h-4 w-4" />
-                                                                    </button>
+                                                                    <div className="hover:scale-110">
 
-                                                                    <button
-                                                                        onClick={() => setDeleteResumeId(resume.id)}
-                                                                        className="text-sm text-red-700 px-2 py-1 hover:text-red-500">
-                                                                        <TrashIcon className="h-4 w-4" />
+                                                                        <button
+                                                                            onClick={() => downloadResume(resume.id, resume.filename)}
+                                                                            className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500 focus:scale-90">
+                                                                            <DownloadIcon className="h-4 w-4" />
+                                                                        </button>
+                                                                    </div>
 
-                                                                    </button>
+                                                                    <div className="hover:scale-110">
+
+                                                                        <button
+                                                                            onClick={() => setDeleteResumeId(resume.id)}
+                                                                            className="text-sm text-red-700 px-2 py-1 hover:text-red-500">
+                                                                            <TrashIcon className="h-4 w-4" />
+
+                                                                        </button>
+                                                                    </div>
 
                                                                 </div>
 
@@ -282,6 +389,7 @@ export default function Resumes() {
                                                                                         Cancel
                                                                                     </button>
 
+                                                                                    <div className="hover:scale-110">
 
                                                                                     <button
                                                                                         onClick={() => {
@@ -289,10 +397,11 @@ export default function Resumes() {
 
                                                                                         }}
                                                                                         className="rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 focus:bg-red-600
-                                                                                        focus:scale-95"
+                                                                                        "
                                                                                     >
                                                                                         Delete
                                                                                     </button>
+                                                                                    </div>
                                                                                 </div>
 
                                                                             </div>
@@ -345,6 +454,153 @@ export default function Resumes() {
 
                             </div>
 
+
+                        </div>
+
+                    )
+                }
+
+                {
+                    category == "add_resume" && (
+                        
+                        <div className="relative w-full max-w-4xl mx-auto overflow-hidden
+                        rounded-3xl border border-slate-800 bg-slate-950 shadow-lg mt-10 mb-7">
+
+                            <div className="absolute pointer-events-none h-120 w-120 bg-blue-600/20 -top-32 -left-32 rounded-full blur-3xl "/>
+                            <div className="absolute pointer-events-none h-120 w-120 bg-violet-600/20 -bottom-32 -right-32 rounded-full blur-3xl "/>
+
+
+                            <div className="relative flex flex-col items-center justify-center px-8 py-16 md:px-16">
+
+                                <div className="text-center mb-8">
+                                    <h2 className="text-3xl md:text-4xl 
+                                    font-bold text-white shadow-lg">
+                                        Upload your resume
+                                    </h2>
+
+                                    <p className="text-slate-400 mt-3 text-sm md:text-base">
+                                        Upload your resume and let AutoJob analyze
+                                        your skills and experience.
+                                    </p>
+                                </div>
+
+                                {
+                                    !selectedFile ? (
+                                        <div onClick={() => fileInputRef.current?.click()}
+                                        onDragOver={(event) => {
+                                            event.preventDefault();
+                                            setIsDragging(true);
+                                        }}
+                                        onDragLeave={()=> setIsDragging(false)}
+                                        onDrop={handleDrop}
+                                        className="group w-full max-w-2xl min-h-[270px]
+                                flex flex-col items-center justify-center border-2 border-dashed border-slate-700 rounded-lg
+                                bg-slate-900/50 transition-all duration-300 hover:border-blue-500/70 hover:bg-slate-900
+                                cursor-pointer">
+
+                                    <div className="flex items-center justify-center h-20 w-20 bg-linear-to-br 
+                                    from-blue-600/20 to-violet-600/20 rounded-3xl border border-blue-500/20
+                                    group-hover:scale-110 transition-all duration-300">
+
+                                        <UploadIcon className="h-10 w-10 text-blue-500 group-hover:text-blue-300"/>
+                                    </div>
+
+
+                                    <h2 className="mt-6 text-lg text-white font-semibold">Drag & drop your resume here</h2>
+
+                                    <p className="mt-2 text-slate-500 text-sm">or {" "}
+                                        <span className="text-blue-400 font-medium hover:text-blue-200">browse file</span>
+                                    </p>
+
+                                    <div className="mt-5 flex items-center gap-2 text-xs text-slate-500 ">
+
+                                        <FileText className="h-4 w-4"/>
+
+                                        <span>PDF</span>
+
+                                        <span>•</span>
+
+                                        <span>Max 10 MB</span>
+                                    </div>
+
+                                    <input
+                                        ref={fileInputRef}
+                                        type="file"
+                                        accept=".pdf"
+                                        onChange={handleFileChange}
+                                        className="hidden" 
+                                    />
+
+                                </div>
+
+                                    ): (
+
+                                        <div className="group flex flex-col items-center justify-center gap-2 border
+                                         border-slate-900/80 w-full max-w-3xl  rounded-3xl hover:bg-slate-700/30 transition-all duration-300 mt-3">
+                                            
+                                            <div className="flex items-center justify-between w-full m-2 p-5 group-hover:scale-105 transition-all duration-300">
+
+
+                                                <div className="flex items-center gap-5 m-2">
+
+                                                    <div className="">
+                                                        <FileText className="h-7 w-7 text-blue-700"/>
+                                                    </div>
+
+                                                    
+                                                    <div className="flex flex-col">
+                                                        <h2 className="text-white font-semibold">{selectedFile.name}</h2>
+                                                        <p className="text-slate-300 text-sm ">{(selectedFile.size/1024/1024).toFixed(2)} MB</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex m-2 gap-2 items-center">
+                                                    <CheckCircleIcon className="text-green-400 h-5 w-5 "/>
+
+                                                    <button 
+                                                    onClick={removeFile}
+                                                    className="p-2 rounded-lg text-slate-500 hover:text-red-400
+                                                    hover:bg-red-500/10 transition">
+                                                        <X className="h-5 w-5"/>
+                                                    </button>
+                                                </div>
+
+                                            </div>
+
+                                            <button
+                                                type="button"
+                                                onClick={handleResumeSubmit}
+                                                className="w-full mt-5 py-3.5
+                                                        rounded-xl
+                                                        bg-blue-600
+                                                        hover:bg-blue-500
+                                                        text-white
+                                                        font-semibold
+                                                        transition-all duration-200
+                                                        shadow-lg shadow-blue-600/20"
+                                            >
+
+                                                Upload Resume
+
+                                            </button>
+
+                                            
+
+                                        </div>
+
+                                        
+                                    )
+                                }
+
+                                
+
+                            </div>
+
+                            <div className="mt-6 mb-5 text-xs text-slate-600 text-center">
+
+                                Your resume will be securely processed and used
+                                to improve your job matching.
+                            </div>
 
                         </div>
 
