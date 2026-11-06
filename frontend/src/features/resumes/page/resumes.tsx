@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
 import Header from "../../../components/header";
 import { useResumes } from "../../../contexts/ResumeContext";
-import {DownloadIcon, File, FileText, TrashIcon, UploadIcon } from "lucide-react";
+import {CheckCircle, CheckCircle2, CheckCircleIcon, DownloadIcon, File, FileText, TrashIcon, UploadIcon, X } from "lucide-react";
 import api from "../../auth/api/axiosInstance";
 import { toast } from "sonner";
 import DashboardLoading from "../../../components/LoadingScreen";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -19,6 +20,7 @@ export default function Resumes() {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [isDragging, setIsDragging] = useState(false);
+    const navigate = useNavigate();
 
     const formatDate = (date: string) => {
 
@@ -188,6 +190,57 @@ export default function Resumes() {
             fileInputRef.current.value = "";
         }
     };
+
+    const handleResumeSubmit = async() => {
+
+        try{
+
+            if (!selectedFile) {
+                toast.error("Please select a resume first");
+                return;
+            }
+
+            console.log("Selected file:", selectedFile);
+            console.log("File name:", selectedFile?.name);
+            console.log("File type:", selectedFile?.type);
+            console.log("File size:", selectedFile?.size);
+            const formData = new FormData();
+            formData.append("file", selectedFile);
+
+            for (const [key, value] of formData.entries()) {
+                console.log("FormData:", key, value);
+            }
+
+            const response = await api.post(
+                "resume/upload",
+                formData
+            )
+    
+            if(response.status != 200) {
+                console.error("Unable to upload the resume")
+                toast.error("Unable to upload the resume",{
+                    description:"Internal server error"
+                })
+            }
+    
+            const data = response.data
+    
+            console.log(data.message)
+            toast.success(data.message, {
+                description: `${selectedFile?.name} - resume has uploaded successfully`
+            })
+
+            await refreshResumes();
+
+        }catch(error){
+            console.log("Error in uploading resume")
+            toast.error("Error while uploading resume", {
+                description: "Resume cannot upload or invalid error"
+            })
+        }
+
+
+    }
 
 
 
@@ -490,8 +543,8 @@ export default function Resumes() {
 
                                                 <div className="flex items-center gap-5 m-2">
 
-                                                    <div className="text-blue-400">
-                                                        <FileText className="h-7 w-7 text-slate-300"/>
+                                                    <div className="">
+                                                        <FileText className="h-7 w-7 text-blue-700"/>
                                                     </div>
 
                                                     
@@ -501,14 +554,41 @@ export default function Resumes() {
                                                     </div>
                                                 </div>
 
-                                                <div className="m-2">
-                                                    <FileText className="h-4 w-4 text-slate-300"/>
+                                                <div className="flex m-2 gap-2 items-center">
+                                                    <CheckCircleIcon className="text-green-400 h-5 w-5 "/>
+
+                                                    <button 
+                                                    onClick={removeFile}
+                                                    className="p-2 rounded-lg text-slate-500 hover:text-red-400
+                                                    hover:bg-red-500/10 transition">
+                                                        <X className="h-5 w-5"/>
+                                                    </button>
                                                 </div>
+
                                             </div>
+
+                                            <button
+                                                type="button"
+                                                onClick={handleResumeSubmit}
+                                                className="w-full mt-5 py-3.5
+                                                        rounded-xl
+                                                        bg-blue-600
+                                                        hover:bg-blue-500
+                                                        text-white
+                                                        font-semibold
+                                                        transition-all duration-200
+                                                        shadow-lg shadow-blue-600/20"
+                                            >
+
+                                                Upload Resume
+
+                                            </button>
 
                                             
 
                                         </div>
+
+                                        
                                     )
                                 }
 
