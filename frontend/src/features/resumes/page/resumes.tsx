@@ -354,10 +354,38 @@ export default function Resumes() {
                     category == "add_resume" && (
                         
                         <div className="relative w-full max-w-4xl mx-auto overflow-hidden
-                        rounded-3xl border border-slate-800 bg-slate-950 shadow-lg">
+                        rounded-3xl border border-slate-800 bg-slate-950 shadow-lg mt-10">
 
-                            <div className="absolute pointer-events-none h-80 w-80 bg-blue-600/20  -top-32"/>
+                            <div className="absolute pointer-events-none h-80 w-80 bg-blue-600/20 -top-32 -left-32 rounded-full blur-3xl "/>
+                            <div className="absolute pointer-events-none h-80 w-80 bg-violet-600/20 -bottom-32 -right-32 rounded-full blur-3xl "/>
 
+
+                            <div className="relative flex flex-col items-center justify-center px-8 py-16 md:px-16">
+
+                                <div className="text-center mb-8">
+                                    <h2 className="text-3xl md:text-4xl 
+                                    font-bold text-white shadow-lg">
+                                        Upload your resume
+                                    </h2>
+
+                                    <p className="text-slate-400 mt-3 text-sm md:text-base">
+                                        Upload your resume and let AutoJob analyze
+                                        your skills and experience.
+                                    </p>
+                                </div>
+
+                                <div className="group w-full max-w-2xl min-h-[270px]
+                                flex flex-col items-center justify-center border-2 border-dashed border-slate-700 rounded-lg
+                                bg-slate-900/50 transition-all duration-300 hover:border-blue-500/70 hover:bg-slate-900">
+
+                                    <div className="">
+                                        <UploadIcon className="h-10 w-10 text-blue-400 group-hover:text-blue-300"/>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
 
                         </div>
 
