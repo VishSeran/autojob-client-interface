@@ -6,7 +6,7 @@ import { useState, type SubmitEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import {toast} from "sonner"
 import api from "../api/axiosInstance";
-import { useUser } from "../../../contexts/UserContext";
+
 
 export default function LogIn() {
 

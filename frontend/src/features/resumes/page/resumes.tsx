@@ -1,11 +1,10 @@
 import { useState } from "react";
 import Header from "../../../components/header";
 import { useResumes } from "../../../contexts/ResumeContext";
-import { ActivityIcon, BedDouble, BotOff, BrushCleaningIcon, Bubbles, DeleteIcon, DownloadIcon, GrabIcon, RecycleIcon, SearchAlertIcon, TextSelect, TrashIcon } from "lucide-react";
+import {DownloadIcon, TrashIcon, UploadIcon } from "lucide-react";
 import api from "../../auth/api/axiosInstance";
 import { toast } from "sonner";
 import DashboardLoading from "../../../components/LoadingScreen";
-import { Link } from "react-router-dom";
 
 
 
@@ -59,7 +58,7 @@ export default function Resumes() {
 
     }
 
-    const deleteResume = async (id: string, name: string) => {
+    const deleteResume = async (id:any, name: string) => {
 
 
         try {
@@ -344,6 +343,20 @@ export default function Resumes() {
 
 
                             </div>
+
+
+                        </div>
+
+                    )
+                }
+
+                {
+                    category == "add_resume" && (
+                        
+                        <div className="relative w-full max-w-4xl mx-auto overflow-hidden
+                        rounded-3xl border border-slate-800 bg-slate-950 shadow-lg">
+
+                            <div className="absolute pointer-events-none h-80 w-80 bg-blue-600/20  -top-32"/>
 
 
                         </div>
