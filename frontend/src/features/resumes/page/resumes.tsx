@@ -202,12 +202,14 @@ export default function Resumes() {
 
                 {
                     category == "view_resumes" && (
-                        <div className="flex-col">
+                        <div className="flex-col transition-all duration-300">
 
                             <div className="flex-col mt-15 mb-15 px-4 py-2 items-center border border-slate-200 bg-white rounded-lg shadow-2xl">
 
 
-                                <div className="rounded-lg bg-linear-to-r from-blue-600/40 to-violet-600/50 p-[5px]">
+                                <div className="relative rounded-lg border border-slate-800 bg-slate-900 shadow-lg p-[5px]">
+                                    <div className="absolute pointer-events-none h-120 w-120 bg-blue-600/20 -top-32 -left-32 rounded-full blur-3xl "/>
+                            <div className="absolute pointer-events-none h-120 w-120 bg-violet-600/20 -bottom-32 -right-32 rounded-full blur-3xl "/>
 
                                     <div className="flex-col m-2">
 
@@ -241,18 +243,24 @@ export default function Resumes() {
 
                                                                 <div className="flex">
 
-                                                                    <button
-                                                                        onClick={() => downloadResume(resume.id, resume.filename)}
-                                                                        className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500 focus:scale-90">
-                                                                        <DownloadIcon className="h-4 w-4" />
-                                                                    </button>
+                                                                    <div className="hover:scale-110">
 
-                                                                    <button
-                                                                        onClick={() => setDeleteResumeId(resume.id)}
-                                                                        className="text-sm text-red-700 px-2 py-1 hover:text-red-500">
-                                                                        <TrashIcon className="h-4 w-4" />
+                                                                        <button
+                                                                            onClick={() => downloadResume(resume.id, resume.filename)}
+                                                                            className="text-sm text-blue-700 px-2 py-1 hover:text-blue-500 focus:scale-90">
+                                                                            <DownloadIcon className="h-4 w-4" />
+                                                                        </button>
+                                                                    </div>
 
-                                                                    </button>
+                                                                    <div className="hover:scale-110">
+
+                                                                        <button
+                                                                            onClick={() => setDeleteResumeId(resume.id)}
+                                                                            className="text-sm text-red-700 px-2 py-1 hover:text-red-500">
+                                                                            <TrashIcon className="h-4 w-4" />
+
+                                                                        </button>
+                                                                    </div>
 
                                                                 </div>
 
@@ -281,6 +289,7 @@ export default function Resumes() {
                                                                                         Cancel
                                                                                     </button>
 
+                                                                                    <div className="hover:scale-110">
 
                                                                                     <button
                                                                                         onClick={() => {
@@ -288,10 +297,11 @@ export default function Resumes() {
 
                                                                                         }}
                                                                                         className="rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 focus:bg-red-600
-                                                                                        focus:scale-95"
+                                                                                        "
                                                                                     >
                                                                                         Delete
                                                                                     </button>
+                                                                                    </div>
                                                                                 </div>
 
                                                                             </div>
@@ -354,10 +364,10 @@ export default function Resumes() {
                     category == "add_resume" && (
                         
                         <div className="relative w-full max-w-4xl mx-auto overflow-hidden
-                        rounded-3xl border border-slate-800 bg-slate-950 shadow-lg mt-10">
+                        rounded-3xl border border-slate-800 bg-slate-950 shadow-lg mt-10 mb-7">
 
-                            <div className="absolute pointer-events-none h-80 w-80 bg-blue-600/20 -top-32 -left-32 rounded-full blur-3xl "/>
-                            <div className="absolute pointer-events-none h-80 w-80 bg-violet-600/20 -bottom-32 -right-32 rounded-full blur-3xl "/>
+                            <div className="absolute pointer-events-none h-120 w-120 bg-blue-600/20 -top-32 -left-32 rounded-full blur-3xl "/>
+                            <div className="absolute pointer-events-none h-120 w-120 bg-violet-600/20 -bottom-32 -right-32 rounded-full blur-3xl "/>
 
 
                             <div className="relative flex flex-col items-center justify-center px-8 py-16 md:px-16">
@@ -408,7 +418,11 @@ export default function Resumes() {
 
                             </div>
 
-                            <div>
+                            <div className="mt-6 mb-5 text-xs text-slate-600 text-center">
+
+                                Your resume will be securely processed and used
+                                to improve your job matching.
+                            </div>
 
                         </div>
 
