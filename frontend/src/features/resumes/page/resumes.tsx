@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Header from "../../../components/header";
 import { useResumes } from "../../../contexts/ResumeContext";
 import {DownloadIcon, FileText, TrashIcon, UploadIcon } from "lucide-react";
@@ -15,6 +15,10 @@ export default function Resumes() {
 
     const [category, setCategory] = useState<Category>("view_resumes");
     const [deleteResumeId, setDeleteResumeId] = useState(null);
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [isDragging, setIsDragging] = useState(false);
 
     const formatDate = (date: string) => {
 
@@ -140,6 +144,10 @@ export default function Resumes() {
                 description: "Resume cannot download or invalid error"
             })
         }
+    }
+
+    const handleFileUpload = (file:File) => {
+        
     }
 
 
@@ -407,7 +415,7 @@ export default function Resumes() {
 
                                         <FileText className="h-4 w-4"/>
 
-                                        <span>PDF, DOC or DOCX</span>
+                                        <span>PDF</span>
 
                                         <span>•</span>
 
