@@ -5,19 +5,11 @@ import DashboardLoading from "../../../components/LoadingScreen";
 
 export default function Dashboard() {
 
-    const { user, isLoading } = useUser();
-
-    if (isLoading) {
-        return <DashboardLoading />;
-    }
-
-    if (!user) {
-        return <Navigate to="/login" replace />;
-    }
-
     return (
         <div>
             <Header />
         </div>
-    );
+    )
+
+    
 }
