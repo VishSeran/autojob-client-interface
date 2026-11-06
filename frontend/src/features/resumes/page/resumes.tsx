@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "../../../components/header";
 import { useResumes } from "../../../contexts/ResumeContext";
-import {DownloadIcon, TrashIcon, UploadIcon } from "lucide-react";
+import {DownloadIcon, FileText, TrashIcon, UploadIcon } from "lucide-react";
 import api from "../../auth/api/axiosInstance";
 import { toast } from "sonner";
 import DashboardLoading from "../../../components/LoadingScreen";
@@ -376,16 +376,39 @@ export default function Resumes() {
 
                                 <div className="group w-full max-w-2xl min-h-[270px]
                                 flex flex-col items-center justify-center border-2 border-dashed border-slate-700 rounded-lg
-                                bg-slate-900/50 transition-all duration-300 hover:border-blue-500/70 hover:bg-slate-900">
+                                bg-slate-900/50 transition-all duration-300 hover:border-blue-500/70 hover:bg-slate-900
+                                cursor-pointer">
 
-                                    <div className="">
-                                        <UploadIcon className="h-10 w-10 text-blue-400 group-hover:text-blue-300"/>
+                                    <div className="flex items-center justify-center h-20 w-20 bg-linear-to-br 
+                                    from-blue-600/20 to-violet-600/20 rounded-3xl border border-blue-500/20
+                                    group-hover:scale-110 transition-all duration-300">
+
+                                        <UploadIcon className="h-10 w-10 text-blue-500 group-hover:text-blue-300"/>
                                     </div>
 
+
+                                    <h2 className="mt-6 text-lg text-white font-semibold">Drag & drop your resume here</h2>
+
+                                    <p className="mt-2 text-slate-500 text-sm">or {" "}
+                                        <span className="text-blue-400 font-medium hover:text-blue-200">browse file</span>
+                                    </p>
+
+                                    <div className="mt-5 flex items-center gap-2 text-xs text-slate-500 ">
+
+                                        <FileText className="h-4 w-4"/>
+
+                                        <span>PDF, DOC or DOCX</span>
+
+                                        <span>•</span>
+
+                                        <span>Max 10 MB</span>
+                                    </div>
 
                                 </div>
 
                             </div>
+
+                            <div>
 
                         </div>
 
