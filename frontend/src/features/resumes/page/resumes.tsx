@@ -147,8 +147,47 @@ export default function Resumes() {
     }
 
     const handleFileUpload = (file:File) => {
-        
+
+        const allowedTypes = [
+            "application/pdf"
+        ];
+
+        if (!allowedTypes.includes(file.type)) {
+            toast.warning("Please upload a PDf file");
+            return;
+        }
+
+        setSelectedFile(file)
     }
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+        const file = e.target.files?.[0];
+
+        if (file) {
+            handleFileUpload(file);
+        }
+    }
+
+    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+
+        e.preventDefault();
+        setIsDragging(true);
+
+        const file = e.dataTransfer.files?.[0]
+
+        if(file){
+            handleFileUpload(file);
+        }
+    };
+
+    const removeFile = () => {
+        setSelectedFile(null)
+
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    };
 
 
 
