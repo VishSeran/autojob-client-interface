@@ -1,17 +1,22 @@
 import { PlusCircle, PlusIcon, Workflow } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import api from "../../auth/api/axiosInstance";
 
 
 export default function WorkflowSideBar() {
 
 
-    const[newWorkflow, setNewWorkflow] = useState("");
+    const[newWorkflow, setNewWorkflow] = useState(false);
 
 
     const newWorkflowHandler = async() => {
 
         try{
+
+            
+
+            
 
 
         }catch(error){
@@ -39,7 +44,9 @@ export default function WorkflowSideBar() {
 
                 <div className="mt-5 pl-1  flex gap-3 justify-start transition-all duration-300 active:scale-95  
                 hover:bg-gray-400">
-                    <button className=" px-8 py-1 rounded-xl group">
+                    <button
+                    onClick={() => setNewWorkflow(true)} 
+                    className=" px-8 py-1 rounded-xl group">
                         <div className="flex items-center gap-1 ">
                             <Workflow className="text-slate-200 h-10 w-10 hidden md:flex"/>
                             <span className="text-slate-100 text-sm md:text-base group-hover:font-semibold">New Workflow</span>
