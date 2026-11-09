@@ -5,6 +5,7 @@ import Dashboard from './features/dashboard/page/dashboard'
 import {Toaster} from "sonner"
 import { ResumeProvider } from './contexts/ResumeContext'
 import Resumes from './features/resumes/page/resumes'
+import Workflow from './features/workflow/page/workflow'
 
 function App() {
   
@@ -32,6 +33,11 @@ function App() {
               <Resumes />
             </ResumeProvider>
           }
+        />
+
+        <Route
+          path='/workflows'
+          element={<Workflow/>} 
         />
 
       </Routes>
