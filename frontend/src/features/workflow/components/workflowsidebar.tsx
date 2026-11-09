@@ -19,11 +19,11 @@ export default function WorkflowSideBar() {
                 shadow-lg">WorkFlows</h1>
 
                 <div className="mt-5 pl-1  flex gap-3 justify-start transition-all duration-300 active:scale-95  
-                hover:bg-blue-900">
-                    <button className=" px-8 py-1 rounded-xl">
-                        <div className="flex items-center gap-1">
+                hover:bg-gray-400">
+                    <button className=" px-8 py-1 rounded-xl group">
+                        <div className="flex items-center gap-1 ">
                             <Workflow className="text-slate-200 h-10 w-10 hidden md:flex"/>
-                            <span className="text-slate-100 text-sm md:text-base">New Workflow</span>
+                            <span className="text-slate-100 text-sm md:text-base group-hover:font-semibold">New Workflow</span>
 
                         </div>
                     </button>
