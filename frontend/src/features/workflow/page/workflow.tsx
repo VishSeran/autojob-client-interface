@@ -12,7 +12,7 @@ export default function Workflow() {
             </div>
 
             <div className="grid grid-cols-[280px_1fr]">
-                <div className=" bg-slate-900">
+                <div className=" bg-slate-950 shadow-3xl">
                     <WorkflowSideBar />
                 </div>
 
