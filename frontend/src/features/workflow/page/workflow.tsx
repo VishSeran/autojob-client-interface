@@ -10,6 +10,16 @@ export default function Workflow() {
                 <Header />
             </div>
 
+            <div className="grid grid-cols-[280px_1fr]">
+                <div>
+                    Grid 1
+                </div>
+
+                <div>
+                    Grid 2
+                </div>
+            </div>
+
         </div>
     )
 }
