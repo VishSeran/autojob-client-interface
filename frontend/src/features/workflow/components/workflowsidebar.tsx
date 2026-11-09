@@ -1,7 +1,26 @@
 import { PlusCircle, PlusIcon, Workflow } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 
 
 export default function WorkflowSideBar() {
+
+
+    const[newWorkflow, setNewWorkflow] = useState("");
+
+
+    const newWorkflowHandler = async() => {
+
+        try{
+
+
+        }catch(error){
+            console.error("Unable to create a new workflow")
+            toast.error("Unable to create a new workflow", {
+                description:"Internal server error"
+            })
+        }
+    }
 
     return (
         <div className="relative w-full h-full overflow-hidden ">
@@ -28,6 +47,14 @@ export default function WorkflowSideBar() {
                         </div>
                     </button>
 
+                </div>
+
+                <div className="mt-5 flex">
+                    <h1 className="p-2 text-base font-semibold text-slate-500 tracking-widest">Recent workflows</h1>
+
+                    <div>
+
+                    </div>
                 </div>
             </div>
 
