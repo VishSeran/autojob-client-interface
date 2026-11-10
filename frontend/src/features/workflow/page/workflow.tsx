@@ -1,11 +1,27 @@
 import { BotMessageSquareIcon, Rocket, WorkflowIcon } from "lucide-react";
 import Header from "../../../components/header";
 import { useState } from "react";
+import { useResumes } from "../../../contexts/ResumeContext";
+import { toast } from "sonner";
 
 export default function Workflow() {
 
     const[newWorkflow, setNewWorkflow] = useState(false);
     const[query, setQuery] = useState("");
+    const {resumes} = useResumes();
+
+    const defaultResume = resumes?.find(
+        (resume) => resume.is_default
+    );
+
+    const submitQuery = () => {
+
+        if (!query.trim()) {
+            console.error("Query not found");
+            toast.error("Query not found");
+            return;
+        }
+    }
 
     return (
 
