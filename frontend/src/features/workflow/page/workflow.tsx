@@ -6,6 +6,7 @@ import { useState } from "react";
 export default function Workflow() {
 
     const[newWorkflow, setNewWorkflow] = useState(false);
+    const[query, setQuery] = useState("");
 
     return (
 
@@ -57,11 +58,34 @@ export default function Workflow() {
                     </div>
                 </div>
 
-                <div>
+                <div className="relative flex items-center justify-center">
                     {
-                        newWorkflow == true && (
-                            <div>
-                                Start a new workflow
+                        newWorkflow && (
+                            <div className="absolute bottom-10 flex justify-center items-center
+                            text-black text-base border border-slate-300 bg-slate-100
+                                w-full max-w-3xl rounded-2xl px-4 py-1 shadow-lg outline-none
+                                focus:border-blue-500 focus:ring-2 focus:ring-blue-900/20">
+                                
+                                <textarea 
+                                placeholder="Type your job requirement here"
+                                value={query}
+                                onChange={(e) => {
+                                    setQuery(e.target.value);
+                                    e.target.style.height = "auto";
+                                    e.target.style.height = `${e.target.scrollHeight}px`
+                                }}
+                                rows={1}
+                                className="text-black text-base bg-slate-100
+                                w-full max-w-3xl py-2 outline-none resize-none overflow-y-auto
+
+                                
+                                "
+                                />
+
+                                <div>
+                                    <button></button>
+                                </div>
+
                             </div>
 
                         )
