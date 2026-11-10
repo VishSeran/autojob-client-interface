@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Workflow } from "../types/workflow";
 import { toast } from "sonner";
 import api from "../features/auth/api/axiosInstance";
@@ -83,4 +83,20 @@ export function WorkflowProvider({children}: WorkflowProviderProps) {
             {children}
         </WorkflowContext.Provider>
     )
+}
+
+export function useWorkflows() {
+
+    const context = useContext(WorkflowContext);
+
+    if (!context) {
+
+        throw new Error(
+
+            "useWorkflows must be used inside WorkflowProvider"
+        );
+    }
+
+    return context;
+    
 }
