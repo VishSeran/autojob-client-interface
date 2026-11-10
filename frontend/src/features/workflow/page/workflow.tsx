@@ -3,23 +3,68 @@ import Header from "../../../components/header";
 import { useState } from "react";
 import { useResumes } from "../../../contexts/ResumeContext";
 import { toast } from "sonner";
+import api from "../../auth/api/axiosInstance";
 
 export default function Workflow() {
 
     const[newWorkflow, setNewWorkflow] = useState(false);
     const[query, setQuery] = useState("");
+    const[loading, setLoading] = useState(false);
+    const[result, setResult] = useState();
+
     const {resumes} = useResumes();
 
     const defaultResume = resumes?.find(
         (resume) => resume.is_default
     );
 
-    const submitQuery = () => {
+    const workflowRequest = {
+        query: query,
+        resume_path: defaultResume?.id
+    };
+
+    const submitQuery = async() => {
 
         if (!query.trim()) {
             console.error("Query not found");
             toast.error("Query not found");
             return;
+        }
+
+        if (!defaultResume) {
+            console.error("Default resume not found");
+            toast.error("Default resume not found");
+            return;
+        }
+
+        try{
+
+            setLoading(true);
+
+            const response = await api.post(
+                "workflow/create",
+                workflowRequest
+            );
+            
+            const data = response.data;
+
+            setResult(data.response);
+            console.log(data.message);
+            console.log("Workflow created:", data.workflow_id);
+
+            toast.success(data.message, {
+                description:"Let's find you a proper job"
+            });
+
+            console.log(data.response);
+            setLoading(false);
+
+        
+        }catch(error){
+            console.error("Unable to create a new workflow", error)
+            toast.error("Unable to create a new workflow", {
+                description: `${error}`
+            })
         }
     }
 
@@ -89,13 +134,16 @@ export default function Workflow() {
                                     e.target.style.height = "auto";
                                     e.target.style.height = `${e.target.scrollHeight}px`
                                 }}
+                                
                                 rows={1}
                                 className="text-base bg-slate-100 text-slate-900
                                 w-full max-w-3xl py-2 outline-none resize-none overflow-y-auto"
                                 />
 
                         
-                            <button className="group shadow-lg bg-slate-100 rounded-full p-2 active:scale-90 transition-all duration-300">
+                            <button 
+                            onClick={submitQuery}
+                            className="group shadow-lg bg-slate-100 rounded-full p-2 active:scale-90 transition-all duration-300">
 
                                 <BotMessageSquareIcon className="text-violet-600 group-hover:hidden"/>
                                 <Rocket

@@ -37,7 +37,11 @@ function App() {
 
         <Route
           path='/workflows'
-          element={<Workflow/>} 
+          element={
+            <ResumeProvider>
+              <Workflow/>
+            </ResumeProvider>
+          } 
         />
 
       </Routes>
