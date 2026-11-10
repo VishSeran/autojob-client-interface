@@ -1,4 +1,4 @@
-import { createContext, useState, type ReactNode } from "react";
+import { createContext, useEffect, useState, type ReactNode } from "react";
 import type { Workflow } from "../types/workflow";
 import { toast } from "sonner";
 import api from "../features/auth/api/axiosInstance";
@@ -64,4 +64,23 @@ export function WorkflowProvider({children}: WorkflowProviderProps) {
             setIsLoading(false)
         }
     }
+
+    useEffect(
+        () => {
+            void refreshWorkflows();
+        },
+        []
+    )
+
+    return (
+
+        <WorkflowContext.Provider value={{
+            workflows,
+            isLoading,
+            setWorkflows,
+            refreshWorkflows
+        }}>
+            {children}
+        </WorkflowContext.Provider>
+    )
 }
