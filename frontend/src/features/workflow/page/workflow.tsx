@@ -1,6 +1,5 @@
-import { WorkflowIcon } from "lucide-react";
+import { BotMessageSquareIcon, Rocket, WorkflowIcon } from "lucide-react";
 import Header from "../../../components/header";
-import WorkflowSideBar from "../components/workflowsidebar";
 import { useState } from "react";
 
 export default function Workflow() {
@@ -75,16 +74,19 @@ export default function Workflow() {
                                     e.target.style.height = `${e.target.scrollHeight}px`
                                 }}
                                 rows={1}
-                                className="text-black text-base bg-slate-100
-                                w-full max-w-3xl py-2 outline-none resize-none overflow-y-auto
-
-                                
-                                "
+                                className="text-base bg-slate-100 text-slate-900
+                                w-full max-w-3xl py-2 outline-none resize-none overflow-y-auto"
                                 />
 
-                                <div>
-                                    <button></button>
-                                </div>
+                        
+                            <button className="group shadow-lg bg-slate-100 rounded-full p-2 active:scale-90 transition-all duration-300">
+
+                                <BotMessageSquareIcon className="text-violet-600 group-hover:hidden"/>
+                                <Rocket
+                                    className="text-violet-600 hidden group-hover:block"
+                                />
+                            </button>
+                                
 
                             </div>
 
