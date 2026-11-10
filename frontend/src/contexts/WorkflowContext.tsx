@@ -1,5 +1,7 @@
 import { createContext, useState, type ReactNode } from "react";
 import type { Workflow } from "../types/workflow";
+import { toast } from "sonner";
+import api from "../features/auth/api/axiosInstance";
 
 
 interface WorkflowContextType {
@@ -30,7 +32,36 @@ export function WorkflowProvider({children}: WorkflowProviderProps) {
 
         try{
 
+            const response = await api.get(
+                "workflow/all"
+            )
 
-        }catch(error)
+            if (response.status !=200){
+                setWorkflows(null);
+                toast.message("Workflows are empty",{
+                    description:"Please create a new workflow"
+                })
+                return;
+            }
+
+            const data = response.data
+
+            const sortedWorkflows = data.sort(
+                (a,b) => new Date(b.create_at).getTime() - new Date(a.create_at).getTime()
+            )
+
+            setWorkflows(sortedWorkflows)
+
+        }catch(error){
+
+            console.error("Failed to fetch workflows", error)
+            toast.error("Internal Server Error",{
+                description:"Failed to fetch workflows"
+            })
+            setWorkflows(null)
+        
+        }finally{
+            setIsLoading(false)
+        }
     }
 }
