@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useResumes } from "../../../contexts/ResumeContext";
 import { toast } from "sonner";
 import api from "../../auth/api/axiosInstance";
+import { useWorkflows } from "../../../contexts/WorkflowContext";
 
 export default function Workflow() {
 
@@ -11,8 +12,10 @@ export default function Workflow() {
     const[query, setQuery] = useState("");
     const[loading, setLoading] = useState(false);
     const[result, setResult] = useState();
+    const[currentWorkflow, setCurrentWorkflow] = useState("")
 
     const {resumes} = useResumes();
+    const {workflows, isLoading} = useWorkflows();
 
     const defaultResume = resumes?.find(
         (resume) => resume.is_default
@@ -106,10 +109,27 @@ export default function Workflow() {
 
                             </div>
 
-                            <div className="mt-5 flex">
+                            <div className="mt-5 flex flex-col">
                                 <h1 className="p-2 text-base font-semibold text-slate-500 tracking-widest">Recent workflows</h1>
 
-                                <div>
+                                <div className="mt-5 flex flex-col gap-3 justify-center items-start">
+
+                                    {
+                                        workflows?.map((workflow)=> (
+
+                                            <button key={workflow.id}
+                                            title={workflow.query}
+                                            className="text-sm md:text-base text-slate-300 shadow-sm px-2 py-1
+                                            active:bg-slate-500
+                                            ">
+                                                {
+                                                    workflow.query.length > 35 
+                                                        ? `${workflow.query.slice(0,35)}...`
+                                                        : workflow.query
+                                                }
+                                            </button>
+                                        ))
+                                    }
 
                                 </div>
                             </div>
@@ -123,7 +143,7 @@ export default function Workflow() {
                         newWorkflow && (
                             <div className="absolute bottom-10 flex justify-center items-center
                             text-black text-base border border-slate-300 bg-slate-100
-                                w-full max-w-3xl rounded-2xl px-4 py-1 shadow-lg outline-none
+                                w-full max-w-3xl rounded-2xl px-4 py-2 shadow-xl outline-none
                                 focus:border-blue-500 focus:ring-2 focus:ring-blue-900/20">
                                 
                                 <textarea 
@@ -143,11 +163,11 @@ export default function Workflow() {
                         
                             <button 
                             onClick={submitQuery}
-                            className="group shadow-lg bg-slate-100 rounded-full p-2 active:scale-90 transition-all duration-300">
+                            className="group shadow-lg bg-slate-100 rounded-full p-2 active:scale-80 transition-all duration-300">
 
                                 <BotMessageSquareIcon className="text-violet-600 group-hover:hidden"/>
                                 <Rocket
-                                    className="text-violet-600 hidden group-hover:block"
+                                    className="text-pink-600 hidden group-hover:block"
                                 />
                             </button>
                                 

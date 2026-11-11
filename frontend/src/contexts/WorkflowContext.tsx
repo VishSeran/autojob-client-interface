@@ -33,7 +33,7 @@ export function WorkflowProvider({children}: WorkflowProviderProps) {
         try{
 
             const response = await api.get(
-                "workflow/all"
+                "/workflow/all"
             )
 
             if (response.status !=200){
@@ -44,9 +44,10 @@ export function WorkflowProvider({children}: WorkflowProviderProps) {
                 return;
             }
 
-            const data = response.data
+            const content = response.data
+            const workflows: Workflow[] = content.workflows;
 
-            const sortedWorkflows = data.sort(
+            const sortedWorkflows = workflows.sort(
                 (a,b) => new Date(b.create_at).getTime() - new Date(a.create_at).getTime()
             )
 
