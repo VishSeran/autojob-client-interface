@@ -51,6 +51,7 @@ export default function Workflow() {
             
             const data = response.data;
 
+            setCurrentWorkflow(data.workflow_id)
             setResult(data.response);
             console.log(data.message);
             console.log("Workflow created:", data.workflow_id);
@@ -73,14 +74,14 @@ export default function Workflow() {
 
     return (
 
-        <div className="grid h-screen grid-rows-[auto_1fr]">
+        <div className="grid h-screen overflow-hidden grid-rows-[auto_1fr]">
 
             <div>
                 <Header />
             </div>
 
-            <div className="grid grid-cols-[280px_1fr]">
-                <div className=" bg-slate-950 shadow-3xl">
+            <div className="grid grid-cols-[280px_1fr] min-h-0 overflow-hidden">
+                <div className=" bg-slate-950 shadow-3xl min-h-0 overflow-hidden">
                     <div className="relative w-full h-full overflow-hidden ">
 
                         <div className="pointer-events-none absolute h-120 w-120 bg-blue-700/20 
@@ -96,7 +97,7 @@ export default function Workflow() {
                             shadow-lg">WorkFlows</h1>
 
                             <div className="mt-5 pl-1  flex gap-3 justify-start transition-all duration-300 active:scale-95  
-                            hover:bg-gray-400">
+                            hover:bg-gray-400/30">
                                 <button
                                 onClick={() => setNewWorkflow(true)} 
                                 className=" px-8 py-1 rounded-xl group">
@@ -109,22 +110,25 @@ export default function Workflow() {
 
                             </div>
 
-                            <div className="mt-5 flex flex-col">
-                                <h1 className="p-2 text-base font-semibold text-slate-500 tracking-widest">Recent workflows</h1>
+                            <div className="relative min-h-0 flex-1 mt-5 flex flex-col">
 
-                                <div className="mt-5 flex flex-col gap-3 justify-center items-start">
+                                <h1 className="shirnk-0 p-2 text-base font-semibold text-slate-500 tracking-widest">Recent workflows</h1>
+
+                                <div className="modern-scrollbar min-h-0 flex-1 mt-5 mb-3 flex flex-col gap-3 text-start overflow-y-auto overflow-x-hidden items-start justify-between">
 
                                     {
                                         workflows?.map((workflow)=> (
 
                                             <button key={workflow.id}
                                             title={workflow.query}
-                                            className="text-sm md:text-base text-slate-300 shadow-sm px-2 py-1
-                                            active:bg-slate-500
-                                            ">
+                                            className= {
+                                                workflow.id == currentWorkflow 
+                                                ? "shrink-0 text-sm md:text-base text-slate-300 shadow-sm px-2 py-2 bg-slate-500 hover:bg-slate-200 hover:text-white rounded-lg"
+                                                : "shrink-0 text-sm md:text-base text-slate-300 shadow-sm px-2 py-2 hover:bg-slate-200/20 hover:text-white rounded-lg"
+                                            }>
                                                 {
-                                                    workflow.query.length > 35 
-                                                        ? `${workflow.query.slice(0,35)}...`
+                                                    workflow.query.length > 30
+                                                        ? `${workflow.query.slice(0,30)}...`
                                                         : workflow.query
                                                 }
                                             </button>
@@ -138,7 +142,7 @@ export default function Workflow() {
                     </div>
                 </div>
 
-                <div className="relative flex items-center justify-center">
+                <div className="relative flex items-center justify-center h-screen max-h-2xl">
                     {
                         newWorkflow && (
                             <div className="absolute bottom-10 flex justify-center items-center
