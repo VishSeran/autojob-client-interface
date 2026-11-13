@@ -5,13 +5,14 @@ import { useResumes } from "../../../contexts/ResumeContext";
 import { toast } from "sonner";
 import api from "../../auth/api/axiosInstance";
 import { useWorkflows } from "../../../contexts/WorkflowContext";
+import type { InitialWorkflowResult } from "../../../types/workflow";
 
 export default function Workflow() {
 
     const[newWorkflow, setNewWorkflow] = useState(false);
     const[query, setQuery] = useState("");
     const[loading, setLoading] = useState(false);
-    const[result, setResult] = useState();
+    const[result, setResult] = useState<InitialWorkflowResult | null>(null);
     const[currentWorkflow, setCurrentWorkflow] = useState("")
 
     const {resumes} = useResumes();
@@ -142,12 +143,33 @@ export default function Workflow() {
                     </div>
                 </div>
 
-                <div className="relative flex items-center justify-center h-screen max-h-2xl">
+                <div className="relative flex items-center justify-center h-full min-h-0 max-h-2xl">
+
+
+                    <div className="flex flex-col h-full min-h-0 overflow-hidden  items-start m-2 pt-3 pb-3">
+                        {
+                            result && (
+
+                                <div className="flex flex-col min-h-0 flex-1 modern-scrollbar overflow-x-hidden overflow-y-auto mb-10">
+                                   {result.messages.map(
+                                    (message) => (
+                                        <div className="px-2 py-1 mb-2 shrink-0 text-slate-800 font-medium border-b border-slate-400"
+                                        key={message.id}>
+                                            {message.content}
+                                        </div>
+                                    )
+                                   )}
+                                </div>
+
+                            )
+                        }
+                    </div>
+
                     {
                         newWorkflow && (
-                            <div className="absolute bottom-10 flex justify-center items-center
+                            <div className="absolute bottom-2 flex justify-center items-center
                             text-black text-base border border-slate-300 bg-slate-100
-                                w-full max-w-3xl rounded-2xl px-4 py-2 shadow-xl outline-none
+                                w-full max-w-3xl rounded-2xl px-4 py-1 shadow-xl outline-none
                                 focus:border-blue-500 focus:ring-2 focus:ring-blue-900/20">
                                 
                                 <textarea 
