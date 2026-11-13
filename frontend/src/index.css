@@ -20,3 +20,27 @@
     animation: none;
   }
 }
+
+.modern-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232, 232, 229, 0.253) transparent;
+}
+
+.modern-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.modern-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modern-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(233, 235, 231, 0.753);
+  border-radius: 9999px;
+  transition: back 0.2s ease;
+}
+
+.modern-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(233, 235, 237, 0.833);
+}
+

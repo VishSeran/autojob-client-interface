@@ -4,15 +4,19 @@ import { useState } from "react";
 import { useResumes } from "../../../contexts/ResumeContext";
 import { toast } from "sonner";
 import api from "../../auth/api/axiosInstance";
+import { useWorkflows } from "../../../contexts/WorkflowContext";
+import type { InitialWorkflowResult } from "../../../types/workflow";
 
 export default function Workflow() {
 
     const[newWorkflow, setNewWorkflow] = useState(false);
     const[query, setQuery] = useState("");
     const[loading, setLoading] = useState(false);
-    const[result, setResult] = useState();
+    const[result, setResult] = useState<InitialWorkflowResult | null>(null);
+    const[currentWorkflow, setCurrentWorkflow] = useState("")
 
     const {resumes} = useResumes();
+    const {workflows, isLoading} = useWorkflows();
 
     const defaultResume = resumes?.find(
         (resume) => resume.is_default
@@ -48,6 +52,7 @@ export default function Workflow() {
             
             const data = response.data;
 
+            setCurrentWorkflow(data.workflow_id)
             setResult(data.response);
             console.log(data.message);
             console.log("Workflow created:", data.workflow_id);
@@ -70,14 +75,14 @@ export default function Workflow() {
 
     return (
 
-        <div className="grid h-screen grid-rows-[auto_1fr]">
+        <div className="grid h-screen overflow-hidden grid-rows-[auto_1fr]">
 
             <div>
                 <Header />
             </div>
 
-            <div className="grid grid-cols-[280px_1fr]">
-                <div className=" bg-slate-950 shadow-3xl">
+            <div className="grid grid-cols-[280px_1fr] min-h-0 overflow-hidden">
+                <div className=" bg-slate-950 shadow-3xl min-h-0 overflow-hidden">
                     <div className="relative w-full h-full overflow-hidden ">
 
                         <div className="pointer-events-none absolute h-120 w-120 bg-blue-700/20 
@@ -93,7 +98,7 @@ export default function Workflow() {
                             shadow-lg">WorkFlows</h1>
 
                             <div className="mt-5 pl-1  flex gap-3 justify-start transition-all duration-300 active:scale-95  
-                            hover:bg-gray-400">
+                            hover:bg-gray-400/30">
                                 <button
                                 onClick={() => setNewWorkflow(true)} 
                                 className=" px-8 py-1 rounded-xl group">
@@ -106,10 +111,30 @@ export default function Workflow() {
 
                             </div>
 
-                            <div className="mt-5 flex">
-                                <h1 className="p-2 text-base font-semibold text-slate-500 tracking-widest">Recent workflows</h1>
+                            <div className="relative min-h-0 flex-1 mt-5 flex flex-col">
 
-                                <div>
+                                <h1 className="shirnk-0 p-2 text-base font-semibold text-slate-500 tracking-widest">Recent workflows</h1>
+
+                                <div className="modern-scrollbar min-h-0 flex-1 mt-5 mb-3 flex flex-col gap-3 text-start overflow-y-auto overflow-x-hidden items-start justify-between">
+
+                                    {
+                                        workflows?.map((workflow)=> (
+
+                                            <button key={workflow.id}
+                                            title={workflow.query}
+                                            className= {
+                                                workflow.id == currentWorkflow 
+                                                ? "shrink-0 text-sm md:text-base text-slate-300 shadow-sm px-2 py-2 bg-slate-500 hover:bg-slate-200 hover:text-white rounded-lg"
+                                                : "shrink-0 text-sm md:text-base text-slate-300 shadow-sm px-2 py-2 hover:bg-slate-200/20 hover:text-white rounded-lg"
+                                            }>
+                                                {
+                                                    workflow.query.length > 30
+                                                        ? `${workflow.query.slice(0,30)}...`
+                                                        : workflow.query
+                                                }
+                                            </button>
+                                        ))
+                                    }
 
                                 </div>
                             </div>
@@ -118,12 +143,33 @@ export default function Workflow() {
                     </div>
                 </div>
 
-                <div className="relative flex items-center justify-center">
+                <div className="relative flex items-center justify-center h-full min-h-0 max-h-2xl">
+
+
+                    <div className="flex flex-col h-full min-h-0 overflow-hidden  items-start m-2 pt-3 pb-3">
+                        {
+                            result && (
+
+                                <div className="flex flex-col min-h-0 flex-1 modern-scrollbar overflow-x-hidden overflow-y-auto mb-10">
+                                   {result.messages.map(
+                                    (message) => (
+                                        <div className="px-2 py-1 mb-2 shrink-0 text-slate-800 font-medium border-b border-slate-400"
+                                        key={message.id}>
+                                            {message.content}
+                                        </div>
+                                    )
+                                   )}
+                                </div>
+
+                            )
+                        }
+                    </div>
+
                     {
                         newWorkflow && (
-                            <div className="absolute bottom-10 flex justify-center items-center
+                            <div className="absolute bottom-2 flex justify-center items-center
                             text-black text-base border border-slate-300 bg-slate-100
-                                w-full max-w-3xl rounded-2xl px-4 py-1 shadow-lg outline-none
+                                w-full max-w-3xl rounded-2xl px-4 py-1 shadow-xl outline-none
                                 focus:border-blue-500 focus:ring-2 focus:ring-blue-900/20">
                                 
                                 <textarea 
@@ -143,11 +189,11 @@ export default function Workflow() {
                         
                             <button 
                             onClick={submitQuery}
-                            className="group shadow-lg bg-slate-100 rounded-full p-2 active:scale-90 transition-all duration-300">
+                            className="group shadow-lg bg-slate-100 rounded-full p-2 active:scale-80 transition-all duration-300">
 
                                 <BotMessageSquareIcon className="text-violet-600 group-hover:hidden"/>
                                 <Rocket
-                                    className="text-violet-600 hidden group-hover:block"
+                                    className="text-pink-600 hidden group-hover:block"
                                 />
                             </button>
                                 

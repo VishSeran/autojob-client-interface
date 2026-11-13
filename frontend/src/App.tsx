@@ -6,6 +6,7 @@ import {Toaster} from "sonner"
 import { ResumeProvider } from './contexts/ResumeContext'
 import Resumes from './features/resumes/page/resumes'
 import Workflow from './features/workflow/page/workflow'
+import { WorkflowProvider } from './contexts/WorkflowContext'
 
 function App() {
   
@@ -38,9 +39,11 @@ function App() {
         <Route
           path='/workflows'
           element={
-            <ResumeProvider>
-              <Workflow/>
-            </ResumeProvider>
+            <WorkflowProvider>
+              <ResumeProvider>
+                <Workflow/>
+              </ResumeProvider>
+            </WorkflowProvider>
           } 
         />
 
