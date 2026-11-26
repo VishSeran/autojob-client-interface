@@ -28,6 +28,10 @@ export default function Workflow() {
         resume_path: defaultResume?.id
     };
 
+    const workflowResumeRequest = {
+        workflow_id: currentWorkflow
+    }
+
     const submitQuery = async() => {
 
         if (!query.trim()) {
@@ -93,6 +97,7 @@ export default function Workflow() {
     const resume_workflow = async(workflow_id:string) => {
         
         if (!workflow_id) {
+
             console.error("Workflow not continue due to internal server error");
             toast.error("Workflow not selected",
                 {
@@ -106,21 +111,34 @@ export default function Workflow() {
         try{
 
             setLoading(true)
-            const response = await api.post("workflow/continue");
+            const response = await api.post("workflow/continue", {
+                "workflow_id" : workflow_id
+            });
             const data = response.data
 
             if (data.status == "resume"){
-                
+
                 setCurrentWorkflow(data.workflow_id);
                 setResult(data.response);
+                setLoading(false);
                 console.log("Workflow has resumed successfully");
                 toast.success("Workflow has resumed successfully");
 
             }
 
+            if (data.status == "interrupt") {
+
+                setCurrentWorkflow(data.workflow_id);
+                setResult(data.interrupt);
+                setLoading(false);
+                console.log("Workflow has interrupted");
+                toast.success("Workflow has interrupted");
+
+            }
+
         }catch(error){
-            console.error("Unable to create a new workflow", error)
-            toast.error("Unable to create a new workflow", {
+            console.error("Unable to resume the workflow", error)
+            toast.error("Unable to resume the workflow", {
                 description: `${error}`
             })
         }
@@ -176,6 +194,8 @@ export default function Workflow() {
 
                                             <button key={workflow.id}
                                             title={workflow.query}
+                                            onClick={() => resume_workflow(workflow.id)
+                                            }
                                             className= {
                                                 workflow.id == currentWorkflow 
                                                 ? "shrink-0 text-sm md:text-base w-full text-start text-slate-300 shadow-sm px-2 py-2 bg-slate-200/20 hover:bg-slate-400/30 hover:text-white rounded-lg"
