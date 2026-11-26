@@ -105,6 +105,19 @@ export default function Workflow() {
 
         try{
 
+            setLoading(true)
+            const response = await api.post("workflow/continue");
+            const data = response.data
+
+            if (data.status == "resume"){
+                
+                setCurrentWorkflow(data.workflow_id);
+                setResult(data.response);
+                console.log("Workflow has resumed successfully");
+                toast.success("Workflow has resumed successfully");
+
+            }
+
         }catch(error){
             console.error("Unable to create a new workflow", error)
             toast.error("Unable to create a new workflow", {
