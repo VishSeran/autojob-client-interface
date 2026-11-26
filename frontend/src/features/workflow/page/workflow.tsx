@@ -1,6 +1,6 @@
-import { BotMessageSquareIcon, Rocket, WorkflowIcon } from "lucide-react";
+import { BotMessageSquareIcon, Check, Rocket, WorkflowIcon } from "lucide-react";
 import Header from "../../../components/header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useResumes } from "../../../contexts/ResumeContext";
 import { toast } from "sonner";
 import api from "../../auth/api/axiosInstance";
@@ -14,9 +14,10 @@ export default function Workflow() {
     const[loading, setLoading] = useState(false);
     const[result, setResult] = useState<InitialWorkflowResult | null>(null);
     const[currentWorkflow, setCurrentWorkflow] = useState("")
+    const [visibleMessages, setVisibleMessages] = useState<typeof result.messages>([]);
 
     const {resumes} = useResumes();
-    const {workflows, isLoading} = useWorkflows();
+    const {workflows, isLoading, setWorkflows, refreshWorkflows} = useWorkflows();
 
     const defaultResume = resumes?.find(
         (resume) => resume.is_default
@@ -26,6 +27,10 @@ export default function Workflow() {
         query: query,
         resume_path: defaultResume?.id
     };
+
+    const workflowResumeRequest = {
+        workflow_id: currentWorkflow
+    }
 
     const submitQuery = async() => {
 
@@ -51,7 +56,7 @@ export default function Workflow() {
             );
             
             const data = response.data;
-
+            await refreshWorkflows();
             setCurrentWorkflow(data.workflow_id)
             setResult(data.response);
             console.log(data.message);
@@ -71,6 +76,73 @@ export default function Workflow() {
                 description: `${error}`
             })
         }
+    }
+
+    useEffect(() => {
+        if (!result?.messages) return;
+
+        setVisibleMessages([]);
+
+        result.messages.forEach((message, index) => {
+            setTimeout(() => {
+                setVisibleMessages((prev) => [
+                    ...prev,
+                    message
+                ]);
+            }, index * 1500);
+        });
+
+    }, [result]);
+
+    const resume_workflow = async(workflow_id:string) => {
+        
+        if (!workflow_id) {
+
+            console.error("Workflow not continue due to internal server error");
+            toast.error("Workflow not selected",
+                {
+                    description:"Workflow not continue due to internal server error"
+                }
+            );
+
+            return;
+        }
+
+        try{
+
+            setLoading(true)
+            const response = await api.post("workflow/continue", {
+                "workflow_id" : workflow_id
+            });
+            const data = response.data
+
+            if (data.status == "resume"){
+
+                setCurrentWorkflow(data.workflow_id);
+                setResult(data.response);
+                setLoading(false);
+                console.log("Workflow has resumed successfully");
+                toast.success("Workflow has resumed successfully");
+
+            }
+
+            if (data.status == "interrupt") {
+
+                setCurrentWorkflow(data.workflow_id);
+                setResult(data.interrupt);
+                setLoading(false);
+                console.log("Workflow has interrupted");
+                toast.success("Workflow has interrupted");
+
+            }
+
+        }catch(error){
+            console.error("Unable to resume the workflow", error)
+            toast.error("Unable to resume the workflow", {
+                description: `${error}`
+            })
+        }
+
     }
 
     return (
@@ -115,16 +187,18 @@ export default function Workflow() {
 
                                 <h1 className="shirnk-0 p-2 text-base font-semibold text-slate-500 tracking-widest">Recent workflows</h1>
 
-                                <div className="modern-scrollbar min-h-0 flex-1 mt-5 mb-3 flex flex-col gap-3 text-start overflow-y-auto overflow-x-hidden items-start justify-between">
+                                <div className="modern-scrollbar min-h-0 flex-1 mt-5 mb-3 flex flex-col gap-3 text-start overflow-y-auto overflow-x-hidden items-start justify-start">
 
                                     {
                                         workflows?.map((workflow)=> (
 
                                             <button key={workflow.id}
                                             title={workflow.query}
+                                            onClick={() => resume_workflow(workflow.id)
+                                            }
                                             className= {
                                                 workflow.id == currentWorkflow 
-                                                ? "shrink-0 text-sm md:text-base text-slate-300 shadow-sm px-2 py-2 bg-slate-500 hover:bg-slate-200 hover:text-white rounded-lg"
+                                                ? "shrink-0 text-sm md:text-base w-full text-start text-slate-300 shadow-sm px-2 py-2 bg-slate-200/20 hover:bg-slate-400/30 hover:text-white rounded-lg"
                                                 : "shrink-0 text-sm md:text-base text-slate-300 shadow-sm px-2 py-2 hover:bg-slate-200/20 hover:text-white rounded-lg"
                                             }>
                                                 {
@@ -146,24 +220,68 @@ export default function Workflow() {
                 <div className="relative flex items-center justify-center h-full min-h-0 max-h-2xl">
 
 
-                    <div className="flex flex-col h-full min-h-0 overflow-hidden  items-start m-2 pt-3 pb-3">
-                        {
-                            result && (
+                    <div className="flex flex-col h-full min-h-0 overflow-hidden
+                items-start m-2 pt-3 pb-3">
 
-                                <div className="flex flex-col min-h-0 flex-1 modern-scrollbar overflow-x-hidden overflow-y-auto mb-10">
-                                   {result.messages.map(
-                                    (message) => (
-                                        <div className="px-2 py-1 mb-2 shrink-0 text-slate-800 font-medium border-b border-slate-400"
-                                        key={message.id}>
-                                            {message.content}
-                                        </div>
-                                    )
-                                   )}
-                                </div>
+    {result && (
+        <div className="modern-scrollbar flex flex-col
+                        min-h-0 flex-1
+                        overflow-x-hidden overflow-y-auto
+                        mb-10 px-4">
 
-                            )
-                        }
+            {visibleMessages.map((message, index) => (
+                <div
+                    key={message.id}
+                    className="flex gap-4"
+                >
+
+                    
+                    <div className="flex flex-col items-center">
+
+                        
+                        <div className="
+                            z-10
+                            flex h-8 w-8
+                            shrink-0
+                            items-center justify-center
+                            rounded-full
+                            bg-green-500
+                            shadow-lg
+                        ">
+                            <Check
+                                className="h-5 w-5 text-white"
+                            />
+                        </div>
+
+                        
+                        {index < visibleMessages.length - 1 && (
+                            <div className="
+                                w-[2px]
+                                flex-1
+                                bg-green-400/60
+                            " />
+                        )}
+
                     </div>
+
+                    
+                    <div className="pb-8 pt-1">
+                        <p className="
+                            text-base
+                            font-medium
+                            text-slate-800
+                        ">
+                            {message.content}
+                        </p>
+                    </div>
+
+                </div>
+            ))}
+
+        </div>
+    )}
+
+</div>
 
                     {
                         newWorkflow && (
